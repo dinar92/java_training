@@ -1,11 +1,11 @@
 package ru.job4j;
 
 public class Calculate {
-	public String echo(String str) {
-		return String.format("%s", str);
+	public void echo() {
+		System.out.println("Hello world!");
 	}
 	public static void main(String[] args) {
 		Calculate calc = new Calculate();
-		System.out.println(calc.echo("Hello world!"));
+		calc.echo();
 	}
 }
