@@ -7,7 +7,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 /**
-* Test class Calculate
+* Test class Calculate.
 * @author gimazetdinov
 * @version 1.0
 * @since 18.01.2017
@@ -15,16 +15,16 @@ import static org.junit.Assert.assertThat;
 public class CalculateTest {
 
 	/**
-	*Test echo()
+	*Test echo().
 	*/
 	@Test
 	public void whenEnterStrThenReturnStr() {
 		Calculate calc = new Calculate();
-		assertThat(calc.echo("Hello world!"), is("Hello world!"));	
+		assertThat(calc.echo("Hello world!"), is("Hello world!"));
 	}
 
 	/**
-	* Test main()
+	* Test main().
 	*/
 	@Test
 	public void whenRunMainThenSysoutString() {
