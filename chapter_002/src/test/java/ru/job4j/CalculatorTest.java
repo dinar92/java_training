@@ -46,7 +46,11 @@ public class CalculatorTest {
 		final double FOUR = 4.0;
 		final double TWO = 2.0;
 		Calculator calc = new Calculator();
-		calc.div(FOUR, TWO);
+		try {
+			calc.div(FOUR, TWO);
+		} catch (ArithmeticException e) {
+			e.printStackTrace();
+		}
 		assertThat(calc.getResult(), is(TWO));
 	}
 
