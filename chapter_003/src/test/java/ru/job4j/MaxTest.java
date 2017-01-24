@@ -21,4 +21,16 @@ public class MaxTest {
 		Max obj = new Max();
 		assertThat(obj.max(first, second), is(expected));
 	}
+
+	/**Test max() method which returns max value of three.*/
+	@Test
+	public void whenFiveTwoAndEightThenEight() {
+		final int first = 5;
+		final int second = 2;
+		final int third = 8;
+		final int expected = 8;
+
+		Max obj = new Max();
+		assertThat(obj.max(first, second, third), is(expected));
+	}
 }
