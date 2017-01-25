@@ -31,7 +31,6 @@ public class Point {
 	*/
 	public double distanceTo(Point point) {
 		int exponent = 2;
-		double distance = Math.sqrt(Math.pow(this.x - point.x, exponent) + Math.pow(this.y - point.y, exponent));
-		return distance;
+		return Math.sqrt(Math.pow(this.x - point.x, exponent) + Math.pow(this.y - point.y, exponent));
 	}
 }

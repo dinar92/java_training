@@ -47,10 +47,9 @@ public class Triangle {
 
 		double semiperimeter = (sideA + sideB + sideC) / 2;
 
-		double area = Math.sqrt(semiperimeter
+		return Math.sqrt(semiperimeter
 								* (semiperimeter - sideA)
 								* (semiperimeter - sideB)
 								* (semiperimeter - sideC));
-		return area;
 	}
 }
