@@ -21,7 +21,7 @@ public class Item {
 	/**Array of comments.*/
 	private Comment[] comments = new Comment[maxSizeOfCommentsList];
 	/**ID.*/
-	private int id;
+	private String id;
 	/**An amount of elements in the array of comments. */
 	private int commentCounter = 0;
 	/**A number for generate the next pseudorandom number.*/
@@ -66,7 +66,7 @@ public class Item {
 	/**Generates unique id for item.*/
 	public void generateId() {
 		Random ran = new Random();
-		this.id = ran.nextInt();
+		this.id = String.valueOf(ran.nextInt());
 	}
 
 	/**Name getter.
@@ -105,7 +105,7 @@ public class Item {
 
 	/**ID getter.
 	*@return id*/
-	public int getId() {
+	public String getId() {
 		return this.id;
 	}
 }
