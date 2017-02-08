@@ -60,7 +60,7 @@ public class ItemTest {
 	public void whenGenerateIdThenUniqueId() {
 		Item item = new Item();
 		Random ran = new Random();
-		final int randInt = ran.nextInt();
+		String randInt = String.valueOf(ran.nextInt());
 		item.generateId();
 		assertThat(item.getId(), not(randInt));
 	}
