@@ -63,9 +63,9 @@ public class TrackerTest {
 	public void whenGetAllThenReturnAllItems() {
 		Tracker track = new Tracker();
 		track.add(itemToAdd);
-		Item[] expectItems = new Item[MAX_AMOUNT];
+		Item[] expectItems = new Item[1];
 		expectItems[0] = itemToAdd;
-		for (int i = 0; i < MAX_AMOUNT; i++) {
+		for (int i = 0; i < track.getAll().length; i++) {
 			assertThat(track.getAll()[i], is(expectItems[i]));
 		}
 	}
@@ -86,7 +86,7 @@ public class TrackerTest {
 		Tracker track = new Tracker();
 		track.add(itemToAdd);
 		track.delete(itemToAdd);
-		Item[] expectItems = new Item[MAX_AMOUNT];
+		Item[] expectItems = new Item[0];
 		assertThat(track.getAll(), is(expectItems));
 	}
 }

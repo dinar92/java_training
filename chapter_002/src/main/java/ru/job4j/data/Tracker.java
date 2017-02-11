@@ -1,6 +1,7 @@
 package ru.job4j.data;
 
 import ru.job4j.model.Item;
+import java.util.Arrays;
 
 /**An emulator of database.
 *@author gimazetdinov
@@ -57,7 +58,7 @@ public class Tracker {
 	*@return items - all items
 	*/
 	public Item[] getAll() {
-		return this.items;
+		return Arrays.copyOf(this.items, position);
 	}
 
 	/**To find item by his name.
