@@ -1,8 +1,8 @@
 package ru.job4j.model;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Random;
 
 /**It's a base class-task for accounting system.
 *@author gimazetdinov
@@ -22,6 +22,8 @@ public class Item {
 	private Comment[] comments = new Comment[maxSizeOfCommentsList];
 	/**ID.*/
 	private String id;
+	/**ID counter for ID generator.*/
+	private static int idCounter = 0;
 	/**An amount of elements in the array of comments. */
 	private int commentCounter = 0;
 	/**A number for generate the next pseudorandom number.*/
@@ -65,8 +67,7 @@ public class Item {
 
 	/**Generates unique id for item.*/
 	public void generateId() {
-		Random ran = new Random();
-		this.id = String.valueOf(ran.nextInt());
+		this.id = String.valueOf(++idCounter);
 	}
 
 	/**Name getter.
@@ -100,7 +101,7 @@ public class Item {
 	/**Comments getter.
 	*@return comments - array of item's comments*/
 	public Comment[] getComments() {
-		return this.comments;
+		return Arrays.copyOf(this.comments, commentCounter);
 	}
 
 	/**ID getter.
