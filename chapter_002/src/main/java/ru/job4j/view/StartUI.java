@@ -25,7 +25,7 @@ public class StartUI {
 	}
 
 	/**UI's start method.*/
-	private void init() {
+	public void init() {
 		StringBuilder mainMenu = new StringBuilder();
 		String answer;
 		mainMenu.append("Welcome to our tracking system!\n")
