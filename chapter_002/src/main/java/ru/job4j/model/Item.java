@@ -26,8 +26,6 @@ public class Item {
 	private static int idCounter = 0;
 	/**An amount of elements in the array of comments. */
 	private int commentCounter = 0;
-	/**A number for generate the next pseudorandom number.*/
-	private final int numberForRand = 25;
 
 	/**Name setter.
 	*@param name name
