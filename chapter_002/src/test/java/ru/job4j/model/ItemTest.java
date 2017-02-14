@@ -3,9 +3,7 @@ package ru.job4j.model;
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.beans.SamePropertyValuesAs.samePropertyValuesAs;
-import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
-import java.util.Random;
 
 /**Testing Item.*/
 public class ItemTest {
@@ -59,9 +57,8 @@ public class ItemTest {
 	@Test
 	public void whenGenerateIdThenUniqueId() {
 		Item item = new Item();
-		Random ran = new Random();
-		String randInt = String.valueOf(ran.nextInt());
+		String idOfFirstItem = "1";
 		item.generateId();
-		assertThat(item.getId(), not(randInt));
+		assertThat(item.getId(), is(idOfFirstItem));
 	}
 }
