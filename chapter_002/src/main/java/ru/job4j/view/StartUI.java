@@ -35,12 +35,12 @@ public class StartUI {
 		do {
 			System.out.print(mainMenu);
 			answer = input.ask("Please, enter your number: ");
-			if (answer.equals("1")) {
+			if ("1".equals(answer)) {
 				showMenu(new Task());
-			} else if (answer.equals("2")) {
+			} else if ("2".equals(answer)) {
 				showMenu(new Bug());
 			}
-		} while (!answer.equals("0"));
+		} while (!("0".equals(answer)));
 	}
 
 	/**Program's start point.
@@ -72,16 +72,16 @@ public class StartUI {
 		do {
 			System.out.print(tasksMenu);
 			answer = input.ask("Please, enter your number: ");
-			if (answer.equals("1")) {
+			if ("1".equals(answer)) {
 				allItems(item);
-			} else if (answer.equals("2")) {
+			} else if ("2".equals(answer)) {
 				findByName();
-			} else if (answer.equals("3")) {
+			} else if ("3".equals(answer)) {
 				findById();
-			} else if (answer.equals("4")) {
+			} else if ("4".equals(answer)) {
 				addItem(item);
 			}
-		} while (!answer.equals("0"));
+		} while (!("0".equals(answer)));
 	}
 
 	/**Shows the menu for the item adding.
@@ -142,10 +142,10 @@ public class StartUI {
 		String answer;
 		do {
 			answer = input.ask("Please, enter item's ID or '0' to back: ");
-			if (!answer.equals("0")) {
+			if (!("0".equals(answer))) {
 				getItem(answer);
 			}
-		} while (!answer.equals("0"));
+		} while (!("0".equals(answer)));
 	}
 
 	/**Shows field for searching by item's name and shows list of found items.*/
@@ -153,7 +153,7 @@ public class StartUI {
 		String answer;
 		do {
 			answer = input.ask("Please, enter item's name or '0' to back: ");
-			if (!answer.equals("0")) {
+			if (!("0".equals(answer))) {
 				for (Item item : tracker.findByName(answer)) {
 					StringBuilder showItem = new StringBuilder();
 					showItem.append(item.getId())
@@ -165,7 +165,7 @@ public class StartUI {
 				}
 				findById();
 			}
-		} while (!answer.equals("0"));
+		} while (!("0".equals(answer)));
 	}
 
 	/**Displays information about the item with the specified ID.
@@ -198,15 +198,15 @@ public class StartUI {
 			System.out.print(showItem);
 			System.out.print(showMenu);
 			answer = input.ask("Please, enter number: ");
-			if (answer.equals("1")) {
+			if ("1".equals(answer)) {
 				update(current);
-			} else if (answer.equals("2")) {
+			} else if ("2".equals(answer)) {
 				delete(current);
 				answer = "0";
-			} else if (answer.equals("3")) {
+			} else if ("3".equals(answer)) {
 				addComment(current);
 			}
-		} while (!answer.equals("0"));
+		} while (!("0".equals(answer)));
 		allItems(current);
 	}
 
@@ -221,14 +221,14 @@ public class StartUI {
 		do {
 			System.out.print(showMenu);
 			answer = input.ask("Please, enter number: ");
-			if (answer.equals("1")) {
+			if ("1".equals(answer)) {
 				item.setName(input.ask("Please, enter new name: "));
 				tracker.update(item);
-			} else if (answer.equals("2")) {
+			} else if ("2".equals(answer)) {
 				item.setDescription(input.ask("Please, enter new description: "));
 				tracker.update(item);
 			}
-		} while (!answer.equals("0"));
+		} while (!("0".equals(answer)));
 	}
 
 	/**Allows to delete item.
@@ -239,7 +239,7 @@ public class StartUI {
 		do {
 			System.out.println("Item was delete!!!");
 			answer = input.ask("Enter '0' to back: ");
-		} while (!answer.equals("0"));
+		} while (!("0".equals(answer)));
 	}
 
 	/**Adds comment to the specified item.
