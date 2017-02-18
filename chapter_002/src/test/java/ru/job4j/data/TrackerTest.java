@@ -3,7 +3,6 @@ package ru.job4j.data;
 import ru.job4j.model.Item;
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;
-//import static org.hamcrest.beans.SamePropertyValuesAs.samePropertyValuesAs;
 import static org.junit.Assert.assertThat;
 
 /**Testing Tracker class.
