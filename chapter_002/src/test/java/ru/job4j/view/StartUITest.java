@@ -9,14 +9,14 @@ import static org.hamcrest.beans.SamePropertyValuesAs.samePropertyValuesAs;
 
 /**Class for testing StartUI.
 *@author gimazetdinov
-*@version 1.0
+*@version 2.0
 */
 public class StartUITest {
 
 	/**Testing adding item.*/
 	@Test
 	public void whenAddItemThenCorrectWorking() {
-		String[] answers = {"1", "4", "First name", "First description", "1", "0", "0", "0"};
+		String[] answers = {"0", "First name", "First description", "task", "exit"};
 		Tracker tracker = new Tracker();
 		Tracker secTracker = new Tracker();
 		Item item = new Item();
@@ -30,7 +30,7 @@ public class StartUITest {
 	/**Testing deleting item.*/
 	@Test
 	public void whenDeleteItemThenCorrectWorking() {
-		String[] answers = {"1", "4", "Sec name", "Sec description", "1", "0", "3", "6", "2", "0", "0", "0", "0", "0"};
+		String[] answers = {"0", "Sec name", "Sec description", "bug", "5", "6", "exit"};
 		Tracker tracker = new Tracker();
 		Tracker secTracker = new Tracker();
 		Item item = new Item();
@@ -45,7 +45,7 @@ public class StartUITest {
 	/**Testing updating item.*/
 	@Test
 	public void whenUpdateItemThenCorrectWorking() {
-		String[] answers = {"1", "4", "Third name", "Third description", "3", "3", "1", "1", "newName", "2", "new description", "0", "0", "0", "0", "0", "0"};
+		String[] answers = {"0", "Third name", "Third description", "task", "6", "3", "newName", "new description", "exit"};
 		Tracker tracker = new Tracker();
 		Tracker secTracker = new Tracker();
 		Item item = new Item();
@@ -63,7 +63,7 @@ public class StartUITest {
 	/**Testing adding comment to the item.*/
 	@Test
 	public void whenAddCommentToItemThenCorrectWorking() {
-		String[] answers = {"1", "4", "Four name", "Four description", "3", "4", "3", "Comment's text", "Comment's author", "0", "0", "0", "0", "0", "0"};
+		String[] answers = {"0", "Four name", "Four description", "task", "7", "4", "Comment's text", "Comment's author", "exit"};
 		Tracker tracker = new Tracker();
 		Tracker secTracker = new Tracker();
 		Item item = new Item();
