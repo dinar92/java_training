@@ -35,6 +35,9 @@ public class MenuTracker {
 		this.tracker = tracker;
 	}
 
+	/**Allowable user's input for type of item to be added.*/
+	private String[] allowableTypeInput = {"task", "bug"};
+
 	/**Fills menu of local class objects.*/
 	public void fillAction() {
 		this.actions[counter++] = new AddItem();
@@ -62,6 +65,16 @@ public class MenuTracker {
 		}
 	}
 
+	/**Return array of actions keys.
+	*@return array of keys*/
+	public int[] getKeysRange() {
+		int[] keysRange = new int[this.sumOfActions];
+		for (int index = 0; index < this.sumOfActions; index++) {
+			keysRange[index] = this.actions[index].key();
+		}
+		return keysRange;
+	}
+
 	/**Shows the menu for the item adding.*/
 	private class AddItem implements UserAction {
 
@@ -80,7 +93,7 @@ public class MenuTracker {
 		public void execute(Input input, Tracker tracker) {
 			String name = input.ask("Please, enter the item's name: ");
 			String description = input.ask("Please, enter the item's description: ");
-			String type = input.ask("Please, enter item's type (task/bug): ");
+			String type = input.ask("Please, enter item's type (task/bug): ", allowableTypeInput);
 			Item item;
 			if ("task".equals(type)) {
 				item = new Task();
@@ -193,7 +206,7 @@ public class MenuTracker {
 		*@param input - method of interaction with the outside
 		*@param tracker - the database emulation*/
 		public void execute(Input input, Tracker tracker) {
-			String answer = input.ask("Please, enter item's ID: ");
+			String answer = input.ask("Please, enter item's ID: ", tracker.getIds());
 			new ShowItem().execute(tracker.findById(answer));
 		}
 
@@ -293,7 +306,7 @@ public class MenuTracker {
 		*@param input - method of interaction with the outside
 		*@param tracker - the database emulation*/
 		public void execute(Input input, Tracker tracker) {
-			String answer = input.ask("Please, enter item's ID: ");
+			String answer = input.ask("Please, enter item's ID: ", tracker.getIds());
 			tracker.delete(tracker.findById(answer));
 			System.out.println("The item was deleted!");
 		}
@@ -321,7 +334,7 @@ public class MenuTracker {
 		*@param input - method of interaction with the outside
 		*@param tracker - the database emulation*/
 		public void execute(Input input, Tracker tracker) {
-			String answer = input.ask("Please, enter item's ID: ");
+			String answer = input.ask("Please, enter item's ID: ", tracker.getIds());
 			Item item = tracker.findById(answer);
 			item.setName(input.ask("Please, enter item's new name: "));
 			item.setDescription(input.ask("Please, enter item's new description: "));
@@ -352,7 +365,7 @@ public class MenuTracker {
 		*@param input - method of interaction with the outside
 		*@param tracker - the database emulation*/
 		public void execute(Input input, Tracker tracker) {
-			String answer = input.ask("Please, enter item's ID: ");
+			String answer = input.ask("Please, enter item's ID: ", tracker.getIds());
 			tracker.findById(answer).addComment(input.ask("Enter comment's text: "),
 												input.ask("Enter comment's author: "),
 												System.currentTimeMillis());

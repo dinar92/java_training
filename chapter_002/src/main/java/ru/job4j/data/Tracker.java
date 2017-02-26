@@ -33,7 +33,7 @@ public class Tracker {
 	*@return item - item found
 	*/
 	public Item findById(String id) {
-		Item foundItem = new Item();
+		Item foundItem = null;
 		for (int i = 0; i < this.position; i++) {
 			if (this.items[i].getId().equals(id)) {
 				foundItem = this.items[i];
@@ -59,6 +59,16 @@ public class Tracker {
 	*/
 	public Item[] getAll() {
 		return Arrays.copyOf(this.items, position);
+	}
+
+	/**Returns the array of ids of all items.
+	*@return array of ids*/
+	public String[] getIds() {
+		String[] ids = new String[this.getAll().length];
+		for (int index = 0; index < this.getAll().length; index++) {
+			ids[index] = this.getAll()[index].getId();
+		}
+		return ids;
 	}
 
 	/**To find item by his name.

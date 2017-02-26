@@ -25,7 +25,7 @@ public class StartUI {
 	/**Program's start point.
 	*@param args - command line arguments*/
 	public static void main(String[] args) {
-		new StartUI(new ConsoleInput(), new Tracker()).init();
+		new StartUI(new ValidateMenuInput(), new Tracker()).init();
 	}
 
 	/**UI's start method.*/
@@ -35,7 +35,7 @@ public class StartUI {
 		String choice;
 		do {
 			menu.show();
-			choice = input.ask("Please, enter 'exit' or select number: ");
+			choice = input.ask("Please, enter 'exit' or select number: ", menu.getKeysRange());
 			if (!"exit".equals(choice)) {
 				menu.select(Integer.parseInt(choice));
 			}

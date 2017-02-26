@@ -24,4 +24,20 @@ public class StubInput implements Input {
 	public String ask(String question) {
 		return answers[position++];
 	}
+
+	/**Method for testing console user interface with specified range of menu items.
+	*@param question - question
+	*@param range - range of menu items
+	*@return answer on the question*/
+	public String ask(String question, int[] range) {
+		return this.ask(question);
+	}
+
+	/**Method for testing console user interface with specified array of menu items.
+	*@param question - question
+	*@param array - allowable input array of strings
+	*@return an allowable user's input*/
+	public String ask(String question, String[] array) {
+		return this.ask(question);
+	}
 }
