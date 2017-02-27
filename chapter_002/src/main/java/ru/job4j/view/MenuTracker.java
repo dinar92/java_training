@@ -18,6 +18,14 @@ public class MenuTracker {
 	/**The database emulation.*/
 	private Tracker tracker;
 
+	/**The constructure sets method of interaction with the outside.
+	*@param input - method of interaction with the outside
+	*@param tracker - database emulator*/
+	public MenuTracker(Input input, Tracker tracker) {
+		this.input = input;
+		this.tracker = tracker;
+	}
+
 	/**Sum of actions.*/
 	private final int sumOfActions = 8;
 
@@ -27,27 +35,43 @@ public class MenuTracker {
 	/**The array of menu's items.*/
 	private UserAction[] actions = new UserAction[sumOfActions];
 
-	/**The constructure sets method of interaction with the outside.
-	*@param input - method of interaction with the outside
-	*@param tracker - database emulator*/
-	public MenuTracker(Input input, Tracker tracker) {
-		this.input = input;
-		this.tracker = tracker;
-	}
-
 	/**Allowable user's input for type of item to be added.*/
 	private String[] allowableTypeInput = {"task", "bug"};
 
+	/**Key of the menu item 'AddItem'.*/
+	private final int keyAddItem = 0;
+
+	/**Key of the menu item 'ShowTasks'.*/
+	private final int keyShowTasks = 1;
+
+	/**Key of the menu item 'ShowBugs'.*/
+	private final int keyShowBugs = 2;
+
+	/**Key of the menu item 'FindById'.*/
+	private final int keyFindById = 3;
+
+	/**Key of the menu item 'FindByName'.*/
+	private final int keyFindByName = 4;
+
+	/**Key of the menu item 'DeleteItem'.*/
+	private final int keyDeleteItem = 5;
+
+	/**Key of the menu item 'UpdateItem'.*/
+	private final int keyUpdateItem = 6;
+
+	/**Key of the menu item 'AddComment'.*/
+	private final int keyAddComment = 7;
+
 	/**Fills menu of local class objects.*/
 	public void fillAction() {
-		this.actions[counter++] = new AddItem();
-		this.actions[counter++] = new ShowTasks();
-		this.actions[counter++] = new ShowBugs();
-		this.actions[counter++] = new FindById();
-		this.actions[counter++] = new FindByName();
-		this.actions[counter++] = new DeleteItem();
-		this.actions[counter++] = new UpdateItem();
-		this.actions[counter++] = new AddComment();
+		this.actions[counter++] = new AddItem(keyAddItem, "Add the new item");
+		this.actions[counter++] = new ShowTasks(keyShowTasks, "Show all tasks");
+		this.actions[counter++] = new ShowBugs(keyShowBugs, "Show all bugs");
+		this.actions[counter++] = new FindById(keyFindById, "Show info about an item by ID");
+		this.actions[counter++] = new FindByName(keyFindByName, "Show info about an item by name");
+		this.actions[counter++] = new DeleteItem(keyDeleteItem, "Delete the item");
+		this.actions[counter++] = new UpdateItem(keyUpdateItem, "Edit the item");
+		this.actions[counter++] = new AddComment(keyAddComment, "Add a comment to the item");
 	}
 
 	/**Starts the selected menu's item to execute.
@@ -76,15 +100,13 @@ public class MenuTracker {
 	}
 
 	/**Shows the menu for the item adding.*/
-	private class AddItem implements UserAction {
+	private class AddItem extends BaseAction {
 
-		/**The key of the action.*/
-		private final int key = 0;
-
-		/**Return the key of the action.
-		*@return key - key*/
-		public int key() {
-			return this.key;
+		/**The constructor sets key and info of the action.
+		*@param key of the action
+		*@param info about the menu item*/
+		AddItem(int key, String info) {
+			super(key, info);
 		}
 
 		/**Executions the action.
@@ -106,24 +128,16 @@ public class MenuTracker {
 			item.setCreate(System.currentTimeMillis());
 			tracker.add(item);
 		}
-
-		/**Shows info about the action.
-		*@return info string*/
-		public String info() {
-			return String.format("%s. %s", this.key(), "Add the new item.");
-		}
 	}
 
 	/**Shows a menu of tasks.*/
-	private class ShowTasks implements UserAction {
+	private class ShowTasks extends BaseAction {
 
-		/**The key of the action.*/
-		private final int key = 1;
-
-		/**Return the key of the action.
-		*@return key - key*/
-		public int key() {
-			return this.key;
+		/**The constructor sets key and info of the action.
+		*@param key of the action
+		*@param info about the menu item*/
+		ShowTasks(int key, String info) {
+			super(key, info);
 		}
 
 		/**Executions the action.
@@ -144,24 +158,16 @@ public class MenuTracker {
 				}
 			}
 		}
-
-		/**Shows info about the action.
-		*@return info string*/
-		public String info() {
-			return String.format("%s. %s", this.key(), "Show all tasks.");
-		}
 	}
 
 	/**Shows a menu of bugs.*/
-	private class ShowBugs implements UserAction {
+	private class ShowBugs extends BaseAction {
 
-		/**The key of the action.*/
-		private final int key = 2;
-
-		/**Return the key of the action.
-		*@return key - key*/
-		public int key() {
-			return this.key;
+		/**The constructor sets key and info of the action.
+		*@param key of the action
+		*@param info about the menu item*/
+		ShowBugs(int key, String info) {
+			super(key, info);
 		}
 
 		/**Executions the action.
@@ -182,24 +188,16 @@ public class MenuTracker {
 				}
 			}
 		}
-
-		/**Shows info about the action.
-		*@return info string*/
-		public String info() {
-			return String.format("%s. %s", this.key(), "Show all bugs.");
-		}
 	}
 
 	/**Searches the item by his ID.*/
-	private class FindById implements UserAction {
+	private class FindById extends BaseAction {
 
-		/**The key of the action.*/
-		private final int key = 3;
-
-		/**Return the key of the action.
-		*@return key - key*/
-		public int key() {
-			return this.key;
+		/**The constructor sets key and info of the action.
+		*@param key of the action
+		*@param info about the menu item*/
+		FindById(int key, String info) {
+			super(key, info);
 		}
 
 		/**Executions the action.
@@ -208,12 +206,6 @@ public class MenuTracker {
 		public void execute(Input input, Tracker tracker) {
 			String answer = input.ask("Please, enter item's ID: ", tracker.getIds());
 			new ShowItem().execute(tracker.findById(answer));
-		}
-
-		/**Shows info about the action.
-		*@return info string*/
-		public String info() {
-			return String.format("%s. %s", this.key(), "Show info about an item by ID.");
 		}
 	}
 
@@ -262,15 +254,13 @@ public class MenuTracker {
 	}
 
 	/**Shows field for searching by item's name and shows list of found items.*/
-	private class FindByName implements UserAction {
+	private class FindByName extends BaseAction {
 
-		/**The key of the action.*/
-		private final int key = 4;
-
-		/**Return the key of the action.
-		*@return key - key*/
-		public int key() {
-			return this.key;
+		/**The constructor sets key and info of the action.
+		*@param key of the action
+		*@param info about the menu item*/
+		FindByName(int key, String info) {
+			super(key, info);
 		}
 
 		/**Executions the action.
@@ -282,24 +272,16 @@ public class MenuTracker {
 				new ShowItem().execute(item);
 			}
 		}
-
-		/**Shows info about the action.
-		*@return info string*/
-		public String info() {
-			return String.format("%s. %s", this.key(), "Show info about an item by name.");
-		}
 	}
 
 	/**Allows to delete item.*/
-	private class DeleteItem implements UserAction {
+	private class DeleteItem extends BaseAction {
 
-		/**The key of the action.*/
-		private final int key = 5;
-
-		/**Return the key of the action.
-		*@return key - key*/
-		public int key() {
-			return this.key;
+		/**The constructor sets key and info of the action.
+		*@param key of the action
+		*@param info about the menu item*/
+		DeleteItem(int key, String info) {
+			super(key, info);
 		}
 
 		/**Executions the action.
@@ -310,24 +292,16 @@ public class MenuTracker {
 			tracker.delete(tracker.findById(answer));
 			System.out.println("The item was deleted!");
 		}
-
-		/**Shows info about the action.
-		*@return info string*/
-		public String info() {
-			return String.format("%s. %s", this.key(), "Delete the item.");
-		}
 	}
 
 	/**Allows to change item's fields.*/
-	private class UpdateItem implements UserAction {
+	private class UpdateItem extends BaseAction {
 
-		/**The key of the action.*/
-		private final int key = 6;
-
-		/**Return the key of the action.
-		*@return key - key*/
-		public int key() {
-			return this.key;
+		/**The constructor sets key and info of the action.
+		*@param key of the action
+		*@param info about the menu item*/
+		UpdateItem(int key, String info) {
+			super(key, info);
 		}
 
 		/**Executions the action.
@@ -341,24 +315,16 @@ public class MenuTracker {
 			tracker.update(item);
 			System.out.println("The item was updated!");
 		}
-
-		/**Shows info about the action.
-		*@return info string*/
-		public String info() {
-			return String.format("%s. %s", this.key(), "Edit the item.");
-		}
 	}
 
 	/**Adds comment to the specified item.*/
-	private class AddComment implements UserAction {
+	private class AddComment extends BaseAction {
 
-		/**The key of the action.*/
-		private final int key = 7;
-
-		/**Return the key of the action.
-		*@return key - key*/
-		public int key() {
-			return this.key;
+		/**The constructor sets key and info of the action.
+		*@param key of the action
+		*@param info about the menu item*/
+		AddComment(int key, String info) {
+			super(key, info);
 		}
 
 		/**Executions the action.
@@ -370,12 +336,6 @@ public class MenuTracker {
 												input.ask("Enter comment's author: "),
 												System.currentTimeMillis());
 			System.out.println("Comment was added!");
-		}
-
-		/**Shows info about the action.
-		*@return info string*/
-		public String info() {
-			return String.format("%s. %s", this.key(), "Add a comment to the item.");
 		}
 	}
 }
