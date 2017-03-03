@@ -38,5 +38,4 @@ public abstract class Figure {
 	*@throws ImpossibleMoveException - if the figure can not move so
 	*@throws OccupiedWayException - if there is another figure on the way*/
 	abstract Cell[] way(Cell dest) throws ImpossibleMoveException, OccupiedWayException;
-
 }
