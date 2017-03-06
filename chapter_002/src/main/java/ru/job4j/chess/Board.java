@@ -4,42 +4,92 @@ import ru.job4j.chess.excepts.FigureNotFoundException;
 import ru.job4j.chess.excepts.ImpossibleMoveException;
 import ru.job4j.chess.excepts.OccupiedWayException;
 
-/**The chess board implementattion.*/
+/**The board implementation.
+ * @author gimazetdinov
+ * @version 1.1*/
 public class Board {
 
-	/**Amount of figures.*/
-	private final int amountOfFigures = 32;
+    /**Calls method, that fills the board of cells.*/
+    public Board() {
+        this.openBoard();
+    }
 
-	/**The container for figures.*/
-	private Figure[] figures = new Figure[amountOfFigures];
+    /**A sides of the board.*/
+    private final int boardSide = 8;
 
-	/**Figures counter.*/
-	private int counter = 0;
+    /**Amount of figures.*/
+    private final int countOfFigures = 32;
 
-	/**Adds new figure.
-	*@param figure figure*/
-	public void addFigure(Figure figure) {
-		this.figures[this.counter++] = figure;
-	}
+    /**The board contains cells.*/
+    final Cell[][] desk = new Cell[boardSide][boardSide];
 
-	/**Makes chess move.
-	*@param source -source cell
-	*@param dest - destination cell
-	*@return success or not
-	*@throws ImpossibleMoveException - if the figure can not move so
-	*@throws OccupiedWayException - if there is another figure on the way
-	*@throws FigureNotFoundException - if source cell is empty*/
-	public boolean move(Cell source, Cell dest) throws FigureNotFoundException, OccupiedWayException, ImpossibleMoveException {
-		if (!source.isEmpty()) {
-			for (int i = 0; i < this.counter; i++) {
-				if (source.getPosition().equals(this.figures[i].way(dest)[0].getPosition())) {
-					this.figures[i].clone(dest);
-					return true;
-				}
-			}
-		} else {
-			throw new FigureNotFoundException("A figure is not found in the given cell.");
-		}
-		return false;
-	}
+    /**A store for figures.*/
+    private Figure[] figures = new Figure[countOfFigures];
+
+    /**The figures counter.*/
+    private int counterOfFigures = 0;
+
+    /**Fills the board of cells.*/
+    private void openBoard() {
+        for (int row = 0; row < desk.length; row++) {
+            for (int column = 0; column < desk[row].length; column++) {
+                this.desk[row][column] = new Cell(row, column);
+            }
+        }
+    }
+
+    /**Fills board figures.*/
+    public void fillBoard() {
+        for (Figure figure : this.figures) {
+            if (figure != null) {
+                this.desk[figure.startPosition.horCoord][figure.startPosition.vertCoord].setFigure(figure);
+            }
+        }
+    }
+
+    /**Adds a new figure in the store.
+     * @param figure - a chess figure.*/
+    public void addFigure(Figure figure) {
+        this.figures[counterOfFigures++] = figure;
+    }
+
+    /**Moves the figure from source cell to destination cell.
+     * @param source - source cell
+     * @param dest - destination cell
+     * @return success move
+     * @throws ImpossibleMoveException - if the figure can not move so
+     * @throws FigureNotFoundException - if cell has not a figure
+     * @throws OccupiedWayException - if on the way is another figure*/
+    public boolean move(Cell source, Cell dest) throws ImpossibleMoveException, FigureNotFoundException, OccupiedWayException {
+        if (source.getFigure() != null) {
+            Figure figure = source.getFigure();
+            for (Cell cell : figure.way(dest)) {
+                if (cell.equals(dest)) {
+                    this.checkMove(cell, figure);
+                    source.setEmpty();
+                    return true;
+                }
+                if (!(figure.equals(cell.getFigure())) && !(cell.getFigure() instanceof Knight)) {
+                    if (cell.getFigure() != null) {
+                        throw new OccupiedWayException("An another figure there is on the way.");
+                    }
+                }
+            }
+        } else {
+            throw new FigureNotFoundException("Cell haven't any figure");
+        }
+        return false;
+    }
+
+    /**Checks figure's move to destination cell.
+     * @param cell - destination cell
+     * @param figure - figure
+     * @throws OccupiedWayException - if on the way is another figure*/
+    private void checkMove(Cell cell, Figure figure) throws OccupiedWayException {
+        if (cell.getFigure() != null && figure.getColor().equals(cell.getFigure().getColor())) {
+            throw new OccupiedWayException("Your figure there is already.");
+        } else {
+            cell.setFigure(figure.clone(cell));
+        }
+    }
 }

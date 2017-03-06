@@ -1,41 +1,43 @@
 package ru.job4j.chess;
 
 import ru.job4j.chess.excepts.ImpossibleMoveException;
-import ru.job4j.chess.excepts.OccupiedWayException;
 
-/**Describes to chess figure.*/
-public abstract class Figure {
+/**A chess figure.*/
+abstract class Figure {
 
-	/**The cell, that indicates the position of the figure on the desk.*/
-	private final Cell position;
+    /**The cell, that indicates the position of the figure on the desk.*/
+    final Cell startPosition;
 
-	/**Constructor sets a position of the figure.
-	*@param position cell*/
-	public Figure(Cell position) {
-		this.position = position;
-		this.position.setFill();
-	}
+    /**Indicates a color of the figure.*/
+    private final String color;
 
-	/**Getter of the current cell.
-	*@return cell */
-	public Cell getCell() {
-		return this.position;
-	}
+    /**The board.*/
+    final Board board;
 
-	/**Clones the figure to destionation.
-	*@param dest - destination
-	*@return cloned figure*/
-	public Figure clone(Cell dest) {
-		this.position.setEmpty();
-		this.position.setPosition(dest.getPosition());
-		this.position.setFill();
-		return this;
-	}
+    /**Constructor sets a position of the figure.
+     *@param startPosition cell
+     * @param color - color of the figure
+     * @param board - board*/
+    Figure(Cell startPosition, String color, Board board) {
+        this.startPosition = startPosition;
+        this.color = color;
+        this.board = board;
+    }
 
-	/**Checks, that the figure can take place in a given cell.
-	*@param dest destination
-	*@return array of cells, that must cross the figure
-	*@throws ImpossibleMoveException - if the figure can not move so
-	*@throws OccupiedWayException - if there is another figure on the way*/
-	abstract Cell[] way(Cell dest) throws ImpossibleMoveException, OccupiedWayException;
+    /**Gets the figure's color.
+     * @return color*/
+    String getColor() {
+        return this.color;
+    }
+
+    /**Clones the figure to destination.
+     *@param dest - destination
+     *@return cloned figure*/
+    abstract Figure clone(Cell dest);
+
+    /**Checks, that the figure can take place in a given cell.
+     *@param dest destination
+     *@return array of cells, that must cross the figure
+     *@throws ImpossibleMoveException - if the figure can not move so*/
+    abstract Cell[] way(Cell dest) throws ImpossibleMoveException;
 }
