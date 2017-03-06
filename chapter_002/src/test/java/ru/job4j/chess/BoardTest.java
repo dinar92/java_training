@@ -4,29 +4,47 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import ru.job4j.chess.excepts.FigureNotFoundException;
+import ru.job4j.chess.excepts.OccupiedWayException;
 
-/**Tests class Board.*/
+/**Tests Board.*/
 public class BoardTest {
 
-	/**Tests move().*/
-	@Test
-	public void whenMoveBishopThenCorrectWork() {
-		Board board = new Board();
-		board.addFigure(new Bishop(new Cell("c1")));
-		boolean result = board.move(new Cell("c1"), new Cell("a3"));
-		assertThat(result, is(true));
-	}
+    /**Tests move().*/
+    @Test
+    public void whenMoveThenMoved() {
+        Board board = new Board();
+        board.addFigure(new Bishop(board.desk[2][0], "white", board));
+        board.fillBoard();
+        assertThat(board.move(board.desk[2][0], board.desk[0][2]), is(true));
+    }
 
-	/**Tests FigureNotFoundException in move().*/
-	@Test
-	public void whenFigureNotFoundThenException() {
-		Board board = new Board();
-		boolean wasExc = false;
-		try {
-			board.move(new Cell("d4"), new Cell("c4"));
-		} catch (FigureNotFoundException fnf) {
-			wasExc = true;
-		}
-		assertThat(wasExc, is(true));
-	}
+    /**Tests move().*/
+    @Test
+    public void whenFigureNotFoundThenFigureNotFoundException() {
+        Board board = new Board();
+        board.fillBoard();
+        boolean isExcept = false;
+        try {
+            board.move(board.desk[2][0], board.desk[0][2]);
+        } catch (FigureNotFoundException fnfe) {
+            isExcept = true;
+        }
+        assertThat(isExcept, is(true));
+    }
+
+    /**Test move().*/
+    @Test
+    public void whenOccupiedWayThenOccupiedWayException() {
+        Board board = new Board();
+        board.addFigure(new Bishop(board.desk[2][0], "white", board));
+        board.addFigure(new Bishop(board.desk[1][1], "white", board));
+        board.fillBoard();
+        boolean isExcept = false;
+        try {
+            board.move(board.desk[2][0], board.desk[0][2]);
+        } catch (OccupiedWayException owe) {
+            isExcept = true;
+        }
+        assertThat(isExcept, is(true));
+    }
 }
