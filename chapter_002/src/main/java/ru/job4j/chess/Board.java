@@ -38,15 +38,6 @@ public class Board {
         }
     }
 
-    /**Fills board figures.*/
-    public void fillBoard() {
-        for (Figure figure : this.figures) {
-            if (figure != null) {
-                this.desk[figure.startPosition.horCoord][figure.startPosition.vertCoord].setFigure(figure);
-            }
-        }
-    }
-
     /**Adds a new figure in the store.
      * @param figure - a chess figure.*/
     public void addFigure(Figure figure) {
@@ -61,22 +52,24 @@ public class Board {
      * @throws FigureNotFoundException - if cell has not a figure
      * @throws OccupiedWayException - if on the way is another figure*/
     public boolean move(Cell source, Cell dest) throws ImpossibleMoveException, FigureNotFoundException, OccupiedWayException {
-        if (source.getFigure() != null) {
-            Figure figure = source.getFigure();
-            for (Cell cell : figure.way(dest)) {
-                if (cell.equals(dest)) {
-                    this.checkMove(cell, figure);
-                    source.setEmpty();
-                    return true;
-                }
-                if (!(figure.equals(cell.getFigure())) && !(cell.getFigure() instanceof Knight)) {
-                    if (cell.getFigure() != null) {
-                        throw new OccupiedWayException("An another figure there is on the way.");
+        for (Figure figure : figures) {
+            if (figure != null && figure.position.equals(source)) {
+                for (Cell cell : figure.way(dest)) {
+                    if (dest.equals(cell)) {
+                        this.checkMove(cell, figure);
+                        return true;
+                    }
+                    for (Figure otherFigure : figures) {
+                        if (otherFigure != null && !figure.equals(otherFigure) && otherFigure.getClass() != Knight.class) {
+                           if (cell.equals(otherFigure.position)) {
+                                throw new OccupiedWayException("An another figure there is on the way.");
+                            }
+                        }
                     }
                 }
+            } else {
+                throw new FigureNotFoundException("Cell haven't any figure");
             }
-        } else {
-            throw new FigureNotFoundException("Cell haven't any figure");
         }
         return false;
     }
@@ -86,10 +79,14 @@ public class Board {
      * @param figure - figure
      * @throws OccupiedWayException - if on the way is another figure*/
     private void checkMove(Cell cell, Figure figure) throws OccupiedWayException {
-        if (cell.getFigure() != null && figure.getColor().equals(cell.getFigure().getColor())) {
-            throw new OccupiedWayException("Your figure there is already.");
-        } else {
-            cell.setFigure(figure.clone(cell));
+        for (Figure otherFigure : figures) {
+            if (otherFigure != null && cell.equals(otherFigure.position)) {
+                if (otherFigure.getColor().equals(figure.getColor())) {
+                    throw new OccupiedWayException("Your figure there is already.");
+                } else {
+                    figure.clone(cell);
+                }
+            }
         }
     }
 }

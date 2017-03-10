@@ -17,10 +17,10 @@ class Bishop extends Figure {
     }
 
     /** Horizontal coordinate.*/
-    private int horCoord = this.startPosition.horCoord;
+    private int horCoord = this.position.horCoord;
 
     /**Vertical coordinate.*/
-    private int vertCoord = this.startPosition.vertCoord;
+    private int vertCoord = this.position.vertCoord;
 
     /**Clones the figure to destination.
      *@param dest - destination

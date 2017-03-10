@@ -5,13 +5,13 @@ package ru.job4j.chess;
  * @author gimazetdinov
  * @version 1.1
  */
-public class Cell {
+class Cell {
 
     /**The horizontal coordinate.*/
-    public final int horCoord;
+    final int horCoord;
 
     /**The vertical coordinate.*/
-    public final int vertCoord;
+    final int vertCoord;
 
     /**Sets coordinates.
      * @param horCoord - the horizontal coordinate
@@ -21,23 +21,27 @@ public class Cell {
         this.vertCoord = vertCoord;
     }
 
-    /**The figure in the cell.*/
-    private Figure figure;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
 
-    /**Sets a figure.
-     * @param figure figure*/
-    void setFigure(Figure figure) {
-        this.figure = figure;
+        Cell cell = (Cell) o;
+
+        if (this.horCoord != cell.horCoord) {
+            return false;
+        }
+        return this.vertCoord == cell.vertCoord;
     }
 
-    /**Gets figure.
-     * @return figure*/
-    Figure getFigure() {
-        return this.figure;
-    }
-
-    /**Cleans the cell.*/
-    void setEmpty() {
-        this.figure = null;
+    @Override
+    public int hashCode() {
+        int result = horCoord;
+        result = 31 * result + vertCoord;
+        return result;
     }
 }

@@ -6,7 +6,7 @@ import ru.job4j.chess.excepts.ImpossibleMoveException;
 abstract class Figure {
 
     /**The cell, that indicates the position of the figure on the desk.*/
-    final Cell startPosition;
+    final Cell position;
 
     /**Indicates a color of the figure.*/
     private final String color;
@@ -19,7 +19,7 @@ abstract class Figure {
      * @param color - color of the figure
      * @param board - board*/
     Figure(Cell startPosition, String color, Board board) {
-        this.startPosition = startPosition;
+        this.position = startPosition;
         this.color = color;
         this.board = board;
     }
