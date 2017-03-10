@@ -5,7 +5,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import ru.job4j.chess.excepts.ImpossibleMoveException;
 
-/**Tests Bishop*/
+/**Tests Bishop.*/
 public class BishopTest {
 
     /**Tests clone().*/
@@ -28,7 +28,7 @@ public class BishopTest {
         expect[1] = board.desk[1][1];
         expect[2] = board.desk[0][2];
 
-        for(int i = 0; i < expect.length; i++) {
+        for (int i = 0; i < expect.length; i++) {
             assertThat(bishop.way(board.desk[0][2])[i], is(expect[i]));
         }
     }

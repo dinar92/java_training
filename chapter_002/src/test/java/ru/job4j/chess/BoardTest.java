@@ -14,7 +14,6 @@ public class BoardTest {
     public void whenMoveThenMoved() {
         Board board = new Board();
         board.addFigure(new Bishop(board.desk[2][0], "white", board));
-        board.fillBoard();
         assertThat(board.move(board.desk[2][0], board.desk[0][2]), is(true));
     }
 
@@ -22,7 +21,6 @@ public class BoardTest {
     @Test
     public void whenFigureNotFoundThenFigureNotFoundException() {
         Board board = new Board();
-        board.fillBoard();
         boolean isExcept = false;
         try {
             board.move(board.desk[2][0], board.desk[0][2]);
@@ -38,7 +36,6 @@ public class BoardTest {
         Board board = new Board();
         board.addFigure(new Bishop(board.desk[2][0], "white", board));
         board.addFigure(new Bishop(board.desk[1][1], "white", board));
-        board.fillBoard();
         boolean isExcept = false;
         try {
             board.move(board.desk[2][0], board.desk[0][2]);
