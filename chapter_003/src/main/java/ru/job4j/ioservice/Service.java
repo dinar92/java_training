@@ -22,13 +22,12 @@ public class Service {
     }
 
     /**Filters out forbidden words.
-     * @param in - input stream
-     * @param out - output stream
+     * @param charIn - input stream
+     * @param charOut - output stream
      * @param abuse - forbidden words
      * @throws IOException IOException
      */
-    public void dropAbuses(InputStream in, OutputStream out, String[] abuse) throws IOException {
-        try (InputStreamReader charIn = new InputStreamReader(in); OutputStreamWriter charOut = new OutputStreamWriter(out)) {
+    public void dropAbuses(InputStream charIn, OutputStream charOut, String[] abuse) throws IOException {
             int currentChar = charIn.read();
             int longestWordsLength = 0;
 
@@ -60,6 +59,5 @@ public class Service {
                 }
                 currentChar = charIn.read();
             }
-        }
     }
 }
