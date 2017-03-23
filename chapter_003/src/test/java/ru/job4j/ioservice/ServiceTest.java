@@ -1,22 +1,32 @@
 package ru.job4j.ioservice;
 
 import org.junit.Test;
+
+import java.io.File;
+import java.io.RandomAccessFile;
+import java.io.IOException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-/**Tests Service.*/
+/**
+ * Tests Service.
+ */
 public class ServiceTest {
 
-    /**An object of a service for tests.*/
+    /**
+     * An object of a service for tests.
+     */
     Service service = new Service();
 
-    /**Tests isEvenNumber().
-     * @throws IOException IOException*/
+    /**
+     * Tests isEvenNumber().
+     *
+     * @throws IOException IOException
+     */
     @Test
     public void whenIsEvenNumberThenTrue() throws IOException {
         byte[] arr = {2};
@@ -25,8 +35,11 @@ public class ServiceTest {
         }
     }
 
-    /**Tests isEvenNumber().
-     * @throws IOException IOException*/
+    /**
+     * Tests isEvenNumber().
+     *
+     * @throws IOException IOException
+     */
     @Test
     public void whenIsNotEvenNumberThenFalse() throws IOException {
         byte[] arr = {1};
@@ -35,8 +48,11 @@ public class ServiceTest {
         }
     }
 
-    /**Tests dropAbuse().
-     * @throws IOException IOException*/
+    /**
+     * Tests dropAbuse().
+     *
+     * @throws IOException IOException
+     */
     @Test
     public void whenInputThenFilteredOutput() throws IOException {
         byte[] inputStream = new String("streamToFilter".toCharArray()).getBytes(StandardCharsets.UTF_8);
@@ -46,6 +62,42 @@ public class ServiceTest {
             service.dropAbuses(input, out, abuseWords);
             for (int i = 0; i < out.toByteArray().length; i++) {
                 assertThat(out.toByteArray()[i], is(expectOutStream[i]));
+            }
+        }
+    }
+
+    /**
+     * Tests textFileSort().
+     *
+     * @throws IOException IOException
+     */
+    @Test
+    public void whenTextFileSortThenNewSortedFile() throws IOException {
+        StringBuilder forSort = new StringBuilder().append("Her\n")
+                .append("name\n")
+                .append("is\n")
+                .append("Alice\n")
+                .append("!\n");
+        StringBuilder expect = new StringBuilder().append("!\n")
+                .append("is\n")
+                .append("Her\n")
+                .append("name\n")
+                .append("Alice\n");
+        File fileForSort = new File("forSort.data");
+        fileForSort.createNewFile();
+        File expectFile = new File("expect.data");
+        expectFile.createNewFile();
+        try (RandomAccessFile raf = new RandomAccessFile(fileForSort, "rw"); RandomAccessFile exp = new RandomAccessFile(expectFile, "rw")) {
+            raf.writeChars(forSort.toString());
+            exp.writeChars(expect.toString());
+        }
+        File sorted = new File("destination.data");
+        long time = System.nanoTime();
+        service.textFileSort(fileForSort);
+        System.out.println(System.nanoTime() - time);
+        try (RandomAccessFile rafSorted = new RandomAccessFile(sorted, "r"); RandomAccessFile rafExp = new RandomAccessFile(expectFile, "r")) {
+            while (rafExp.getFilePointer() < expect.length() - 1) {
+                assertThat(rafSorted.readLine(), is(rafExp.readLine()));
             }
         }
     }
