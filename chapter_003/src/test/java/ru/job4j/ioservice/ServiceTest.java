@@ -92,9 +92,7 @@ public class ServiceTest {
             exp.writeChars(expect.toString());
         }
         File sorted = new File("destination.data");
-        long time = System.nanoTime();
         service.textFileSort(fileForSort);
-        System.out.println(System.nanoTime() - time);
         try (RandomAccessFile rafSorted = new RandomAccessFile(sorted, "r"); RandomAccessFile rafExp = new RandomAccessFile(expectFile, "r")) {
             while (rafExp.getFilePointer() < expect.length() - 1) {
                 assertThat(rafSorted.readLine(), is(rafExp.readLine()));

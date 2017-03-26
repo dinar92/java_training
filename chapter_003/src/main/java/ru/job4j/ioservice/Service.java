@@ -1,6 +1,14 @@
 package ru.job4j.ioservice;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +87,7 @@ public class Service {
                 while (raf.getFilePointer() < raf.length() - 1) {
                     tmpArray.add(raf.readLine());
                 }
-                tmpFile.delete();
+                raf.setLength(0L);
                 int out, in;
                 for (out = 1; out < tmpArray.size(); out++) {
                     String tmp = tmpArray.get(out);
@@ -90,7 +98,6 @@ public class Service {
                     }
                     tmpArray.set(in, tmp);
                 }
-                tmpFile.createNewFile();
                 for (String str : tmpArray) {
                     raf.writeBytes(str + "\n");
                 }
@@ -100,7 +107,7 @@ public class Service {
 
         //Создаем массив для хранения всех строк и вставляем первый файл и удаляем его.
         List<String> sortedArr = new ArrayList<>();
-        try (RandomAccessFile raf = new RandomAccessFile(tmpArrays.get(0), "r")) {
+        try (RandomAccessFile raf = new RandomAccessFile(tmpArrays.get(0), "rw")) {
             while (raf.getFilePointer() < raf.length() - 1) {
                 sortedArr.add(raf.readLine());
             }
@@ -139,7 +146,7 @@ public class Service {
         destination.createNewFile();
         try (RandomAccessFile raf = new RandomAccessFile(destination, "rw")) {
             for (String str : sortedArr) {
-                raf.writeBytes(str);
+                raf.writeBytes(str + "\n");
             }
         }
     }
