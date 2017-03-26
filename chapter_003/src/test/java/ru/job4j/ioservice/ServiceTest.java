@@ -59,7 +59,7 @@ public class ServiceTest {
         byte[] expectOutStream = new String("stToter".toCharArray()).getBytes(StandardCharsets.UTF_8);
         String[] abuseWords = {"Fil", "ream"};
         try (ByteArrayInputStream input = new ByteArrayInputStream(inputStream); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            service.dropAbuses(input, out, abuseWords);
+            service.dropAbuses2(input, out, abuseWords);
             for (int i = 0; i < out.toByteArray().length; i++) {
                 assertThat(out.toByteArray()[i], is(expectOutStream[i]));
             }
