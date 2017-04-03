@@ -14,6 +14,13 @@ import java.io.RandomAccessFile;
  */
 public class ConsoleChat {
 
+    /**A stop command.*/
+    static final String STOP = "стоп";
+    /**A continue command.*/
+    static final String CONTINUE = "продолжить";
+    /**An exit command.*/
+    static final String EXIT = "закончить";
+
     /**Creates a chat that answers the phrases from the specified file.
      * Creates a log file with all messages.
      * At the beginning of the word "стоп" stops returning a response.
@@ -30,14 +37,14 @@ public class ConsoleChat {
             String input = "";
             Boolean isActive = true;
 
-            while (!"закончить".equals(input)) {
+            while (!EXIT.equals(input)) {
                 input = usersInput.readLine();
                 byte[] arr = (input + '\n').getBytes("UTF-8");
                 log.write(arr);
 
-                if ("стоп".equals(input) || "закончить".equals(input)) {
+                if (STOP.equals(input) || EXIT.equals(input)) {
                     isActive = false;
-                } else if ("продолжить".equals(input)) {
+                } else if (CONTINUE.equals(input)) {
                     isActive = true;
                 }
 
