@@ -1,12 +1,6 @@
 package ru.job4j.ioservice.networkManager;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.RandomAccessFile;
+import java.io.*;
 
 /**
  * Класс для отправки и получения файлов в байтовом представлении.
@@ -32,6 +26,7 @@ public class FileTransfer {
                 bos.write(bytes, 0, lenOfBuffer);
             }
         }
+        bos.flush();
     }
 
     /**Получение файла от клиента в текущую директорию.
@@ -43,12 +38,15 @@ public class FileTransfer {
         File newFile = new File(file.getPath() + File.separatorChar + input.readLine());
         newFile.createNewFile();
         long lengthOfFile = Long.valueOf(input.readLine());
-        try (RandomAccessFile raf = new RandomAccessFile(newFile, "rw")) {
+        //try (RandomAccessFile raf = new RandomAccessFile(newFile, "rw")) {
+        try (FileOutputStream fos = new FileOutputStream(newFile)) {
             byte[] bytes = new byte[8192];
             int lenOfBytes;
+            System.out.println(lengthOfFile);
             do {
                 lenOfBytes = bis.read(bytes, 0, Math.min((int) lengthOfFile, bytes.length));
-                raf.write(bytes, 0, lenOfBytes);
+                System.out.println("I'm here");
+                fos.write(bytes, 0, lenOfBytes);
                 lengthOfFile -= lenOfBytes;
             } while (lengthOfFile != 0);
         }
