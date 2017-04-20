@@ -87,7 +87,6 @@ public class NetworkClient {
      * @throws IOException IOException*/
     private void upload(String nameOfFile, PrintWriter output, BufferedOutputStream bos, File file) throws IOException {
         new FileTransfer().sendFile(nameOfFile, output, bos, file);
-        output.print("");
     }
 
     /**Main.

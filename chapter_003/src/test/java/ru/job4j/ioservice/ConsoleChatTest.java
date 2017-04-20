@@ -37,7 +37,7 @@ public class ConsoleChatTest {
     /**If you enter "stop", the program stops.
      * @throws IOException IOException*/
     @Test
-    public void whenAskStopThenChatStopes() throws IOException {
+    public void whenAskStopThenChatStops() throws IOException {
         try (RandomAccessFile file = new RandomAccessFile(fileWithPhrases, "r")) {
             byte[] fullText = new byte[(int) file.length()];
             file.readFully(fullText);

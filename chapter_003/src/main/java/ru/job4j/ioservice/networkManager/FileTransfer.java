@@ -1,6 +1,13 @@
 package ru.job4j.ioservice.networkManager;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 
 /**
  * Класс для отправки и получения файлов в байтовом представлении.
