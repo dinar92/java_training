@@ -14,7 +14,7 @@ public class BaseCalculator extends Calculator {
      * @return result of expression
      * @throws ArithmeticException division by zero
      */
-    public Double doOperation(Double arg1, Double arg2, String operation) throws ArithmeticException {
+    public double doOperation(double arg1, double arg2, String operation) throws ArithmeticException {
         if ("+".equals(operation)) {
             this.add(arg1, arg2);
         } else if ("-".equals(operation)) {

@@ -43,7 +43,7 @@ public class InteractCalc {
      * @param args args
      */
     public static void main(String[] args) {
-        new InteractCalc(new BaseCalculator(), new ConsoleInput()).calculate();
+        new InteractCalc(new EngineerCalculator(), new ConsoleInput()).calculate();
     }
 
     /**
@@ -53,7 +53,7 @@ public class InteractCalc {
         try {
             String command = "", operation = "";
             Boolean repeat = true;
-            Double arg1, arg2, result = 0.0;
+            double arg1, arg2, result = 0.0;
             do {
                 if (repeat) {
                     arg1 = Double.parseDouble(usersInput.getUsersInput("Enter first arg:"));
