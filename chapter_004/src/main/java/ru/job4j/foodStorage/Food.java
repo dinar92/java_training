@@ -48,6 +48,14 @@ public class Food {
     }
 
     /**
+     * Name getter.
+     * @return name.
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
      * Returns an expiry date.
      * @return an expiry date.
      */

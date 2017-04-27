@@ -16,6 +16,7 @@ public class Warehous implements Storage {
 
     /**
      * Adds the product to the storage.
+     *
      * @param food product.
      * @return success of adding.
      */
@@ -28,6 +29,7 @@ public class Warehous implements Storage {
      * Checking the product for compliance with expiration dates.
      * Returns true if the product is spoiled by less than 25%, or
      * false if is spoiled by more than 25%.
+     *
      * @param food product.
      * @return result of checking.
      */
