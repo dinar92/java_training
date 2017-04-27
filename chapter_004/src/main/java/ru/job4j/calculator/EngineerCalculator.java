@@ -13,7 +13,7 @@ public class EngineerCalculator extends BaseCalculator {
      * @param arg2 an angle, in radians.
      * @return the sine of the argument.
      */
-    public double sinus(Double arg1, Double arg2) {
+    public double sinus(double arg1, double arg2) {
         return arg1 * Math.sin(arg2);
     }
 
@@ -24,7 +24,7 @@ public class EngineerCalculator extends BaseCalculator {
      * @param arg2 an angle, in radians.
      * @return the cosine of the argument.
      */
-    public double cosin(Double arg1, Double arg2) {
+    public double cosin(double arg1, double arg2) {
         return arg1 * Math.cos(arg2);
     }
 
@@ -35,7 +35,7 @@ public class EngineerCalculator extends BaseCalculator {
      * @param arg2 an angle, in radians.
      * @return the tangent of the argument.
      */
-    public double tangens(Double arg1, Double arg2) {
+    public double tangens(double arg1, double arg2) {
         return arg1 * Math.tan(arg2);
     }
 
