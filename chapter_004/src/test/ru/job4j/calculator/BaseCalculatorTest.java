@@ -18,9 +18,9 @@ public class BaseCalculatorTest {
     @Test
     public void whenDoOperationThenGetRsult() throws ArithmeticException{
         BaseCalculator calc = new BaseCalculator();
-        Double arg1 = 5.0;
-        Double arg2 = 2.0;
-        Double result = arg1 / arg2;
+        double arg1 = 5.0;
+        double arg2 = 2.0;
+        double result = arg1 / arg2;
         String division = "/";
         assertThat(calc.doOperation(arg1, arg2, division), is(result));
     }
