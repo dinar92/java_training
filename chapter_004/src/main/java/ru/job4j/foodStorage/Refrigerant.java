@@ -18,11 +18,6 @@ public class Refrigerant extends StorageDecorator {
     }
 
     /**
-     * The list of vegetables.
-     */
-    String[] listOfVegetables = {"potato", "carrot", "cabbage"};
-
-    /**
      * The refrigerator.
      */
     List<Food> refrigerator = new ArrayList<>();
@@ -36,8 +31,8 @@ public class Refrigerant extends StorageDecorator {
     @Override
     public boolean addProduct(Food food) {
         boolean added = false;
-        for (String product : listOfVegetables) {
-            if (food.getName().equals(product)) {
+        for (Veg product : Veg.values()) {
+            if (food.getName().equalsIgnoreCase(product.toString())) {
                 added = this.refrigerator.add(food);
                 break;
             }

@@ -10,11 +10,6 @@ import java.util.List;
 public class Ecofriendly extends StorageDecorator {
 
     /**
-     * List of products for processing.
-     */
-    String[] canReproduct = {"potato", "tomato"};
-
-    /**
      * Container for products, that will be process.
      */
     List<Food> containerForReproduct = new ArrayList<>();
@@ -35,8 +30,8 @@ public class Ecofriendly extends StorageDecorator {
     @Override
     public boolean addProduct(Food food) {
         boolean added = false;
-        for (String product : canReproduct) {
-            if (food.getName().equals(product)) {
+        for (CanReproduct product : CanReproduct.values()) {
+            if (food.getName().equalsIgnoreCase(product.toString())) {
                 added = this.containerForReproduct.add(food);
                 break;
             }
