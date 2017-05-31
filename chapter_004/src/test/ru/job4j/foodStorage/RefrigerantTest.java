@@ -17,7 +17,7 @@ public class RefrigerantTest {
      */
     public Food createFreshVegFood() {
         int yearOfCreate = 2017, yearOfExpiry = 2017;
-        int monthOfCreate = 4, monthOfExpiry = 5;
+        int monthOfCreate = 5, monthOfExpiry = 7;
         int dayOfCreate = 26, dayOfExpiry = 30;
         Food food = new Food("potato", 0.5);
         food.setCreateDate(yearOfCreate, monthOfCreate, dayOfCreate);
