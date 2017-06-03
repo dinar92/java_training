@@ -15,7 +15,7 @@ public class TrashTest {
      * Tests conformityTest().
      */
     @Test
-    public void whenProductIsSpoiledThenTrue() {
+    public void whenProductIsSpiledThenTrue() {
         int yearOfCreate = 2017, yearOfExpiry = 2017;
         int monthOfCreate = 2, monthOfExpiry = 3;
         int dayOfCreate = 23, dayOfExpiry = 30;
@@ -33,7 +33,7 @@ public class TrashTest {
     @Test
     public void whenProductIsGoodForTrashThenFalse() {
         int yearOfCreate = 2017, yearOfExpiry = 2017;
-        int monthOfCreate = 5, monthOfExpiry = 7;
+        int monthOfCreate = 3, monthOfExpiry = 5;
         int dayOfCreate = 23, dayOfExpiry = 30;
         Food food = new Food("Meat", 6.0);
 

@@ -181,7 +181,6 @@ public class Item {
 
     /**
      * Performs a search by identifier.
-     * If identifier equals "", then return item of the root (the main item).
      * Return item or null.
      *
      * @param identifier identifier.
@@ -189,18 +188,14 @@ public class Item {
      */
     public Item searchItem(String identifier) {
         Item expect = null;
-        if ("".equals(identifier)) {
-            expect = this;
-        } else {
-            for (Item item : this.items) {
-                if (identifier.equals(item.getIdentifier())) {
-                    expect = item;
+        for (Item item : this.items) {
+            if (identifier.equals(item.getIdentifier())) {
+                expect = item;
+                break;
+            } else {
+                expect = item.searchItem(identifier);
+                if (expect != null && identifier.equals(expect.getIdentifier())) {
                     break;
-                } else {
-                    expect = item.searchItem(identifier);
-                    if (expect != null && identifier.equals(expect.getIdentifier())) {
-                        break;
-                    }
                 }
             }
         }

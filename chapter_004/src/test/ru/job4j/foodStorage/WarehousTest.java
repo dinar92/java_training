@@ -17,7 +17,7 @@ public class WarehousTest {
     @Test
     public void whenProductIsFreshThenTrue() throws Exception {
         int yearOfCreate = 2017, yearOfExpiry = 2017;
-        int monthOfCreate = 5, monthOfExpiry = 7;
+        int monthOfCreate = 4, monthOfExpiry = 5;
         int dayOfCreate = 23, dayOfExpiry = 30;
         Food food = new Food("Meat", 6.0);
 
