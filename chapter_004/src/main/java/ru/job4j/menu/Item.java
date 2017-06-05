@@ -15,13 +15,9 @@ import java.util.List;
 public class Item {
 
     /**
-     * Default constructor.
-     * Sets a default key generator for subitems, that
-     * generates simple integers.
+     * The key generator for subitems.
      */
-    public Item() {
-        this.keyGenerator = new KeyGeneratorForMenuItems();
-    }
+    private KeyGenerator keyGenerator;
 
     /**
      * The parent's identifier.
@@ -42,11 +38,6 @@ public class Item {
     private String name;
 
     /**
-     * The key generator for subitems.
-     */
-    private KeyGenerator keyGenerator;
-
-    /**
      * The identifier of the current item.
      * Consist of a prefix and a key.
      * Used to find the item.
@@ -57,6 +48,15 @@ public class Item {
      * The container for subitems.
      */
     private List<Item> items = new ArrayList<>();
+
+    /**
+     * Default constructor.
+     * Sets a default key generator for subitems, that
+     * generates simple integers.
+     */
+    public Item() {
+        this.keyGenerator = new KeyGeneratorForMenuItems();
+    }
 
     /**
      * Initializes the item as a subitem.
