@@ -1,5 +1,7 @@
 package ru.job4j.foodStorage;
 
+import java.util.List;
+
 /**
  * Created by pacman on 27.04.17.
  */
@@ -39,5 +41,31 @@ public class StorageDecorator implements Storage {
      */
     public boolean addProduct(Food food) {
         return this.storage.addProduct(food);
+    }
+
+    /**
+     * Returns all products from the storage.
+     * @return products.
+     */
+    @Override
+    public List<Food> getProducts() {
+        return this.storage.getProducts();
+    }
+
+    /**
+     * Clears the full storage.
+     */
+    @Override
+    public void clearStorage() {
+        this.storage.clearStorage();
+    }
+
+    /**
+     * Removes specified product from the storage.
+     * @param food specified product.
+     */
+    @Override
+    public void removeProduct(Food food) {
+        this.storage.removeProduct(food);
     }
 }

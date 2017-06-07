@@ -20,7 +20,7 @@ public class Refrigerant extends StorageDecorator {
     /**
      * The refrigerator.
      */
-    List<Food> refrigerator = new ArrayList<>();
+    List<Food> storage = new ArrayList<>();
 
     /**
      * Checking the product for compliance with expiration dates and
@@ -33,7 +33,7 @@ public class Refrigerant extends StorageDecorator {
         boolean added = false;
         for (Veg product : Veg.values()) {
             if (food.getName().equalsIgnoreCase(product.toString())) {
-                added = this.refrigerator.add(food);
+                added = this.storage.add(food);
                 break;
             }
         }

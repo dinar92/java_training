@@ -1,6 +1,10 @@
 package ru.job4j.foodStorage;
 
+import jdk.nashorn.internal.runtime.StoredScript;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.core.Is.is;
@@ -35,5 +39,23 @@ public class ControlQualityTest {
         controlQuality.addStorage(new Trash());
 
         assertThat(controlQuality.addProduct(food), is(true));
+    }
+
+    /**
+     * Tests getAllStorage().
+     */
+    @Test
+    public void whenGetAllStorageThenReturnList() {
+        Trash trash = new Trash();
+        Warehouse warehouse = new Warehouse();
+        ControlQuality controlQuality = new ControlQuality();
+        List<Storage> containerOfStorage = new ArrayList<>();
+
+        containerOfStorage.add(trash);
+        containerOfStorage.add(warehouse);
+        controlQuality.addStorage(trash);
+        controlQuality.addStorage(warehouse);
+
+        assertThat(controlQuality.getAllStorage(), is(containerOfStorage));
     }
 }

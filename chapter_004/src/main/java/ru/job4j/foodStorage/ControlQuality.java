@@ -7,7 +7,7 @@ import java.util.List;
  * Created by pacman on 21.04.17.
  * Conducts quality control.
  */
-public class ControlQuality {
+public class ControlQuality implements ControlQualityInterface {
 
     /**
      * The product storage.
@@ -64,5 +64,13 @@ public class ControlQuality {
      */
     public boolean addProduct(Food food) {
        return this.storageDistribution(food);
+    }
+
+    /**
+     * Returns list of all exist storage.
+     * @return storage.
+     */
+    public List<Storage> getAllStorage() {
+        return this.productStorage;
     }
 }

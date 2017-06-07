@@ -12,7 +12,7 @@ public class Shop implements Storage {
     /**
      * A storage of products.
      */
-    private List<Food> shop = new ArrayList<>();
+    private List<Food> storage = new ArrayList<>();
     /**
      * Adds the product to the storage.
      * @param food product.
@@ -20,7 +20,33 @@ public class Shop implements Storage {
      */
     @Override
     public boolean addProduct(Food food) {
-        return shop.add(food);
+        return storage.add(food);
+    }
+
+    /**
+     * Returns all products from the storage.
+     * @return products.
+     */
+    @Override
+    public List<Food> getProducts() {
+        return this.storage;
+    }
+
+    /**
+     * Clears the full storage.
+     */
+    @Override
+    public void clearStorage() {
+        this.storage.clear();
+    }
+
+    /**
+     * Removes specified product from the storage.
+     * @param food specified product.
+     */
+    @Override
+    public void removeProduct(Food food) {
+        this.storage.remove(food);
     }
 
     /**

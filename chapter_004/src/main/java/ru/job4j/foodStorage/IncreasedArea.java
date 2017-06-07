@@ -20,7 +20,7 @@ public class IncreasedArea extends StorageDecorator {
     /**
      * Additional area.
      */
-    List<Food> additionalPlace = new ArrayList<>();
+    List<Food> storage = new ArrayList<>();
 
     /**
      * One more storage will be added if the add(Food food) returns false in case of lack of space in the main storage.
@@ -29,6 +29,6 @@ public class IncreasedArea extends StorageDecorator {
      */
     @Override
     public boolean addProduct(Food food) {
-        return super.addProduct(food) || this.additionalPlace.add(food);
+        return super.addProduct(food) || this.storage.add(food);
     }
 }

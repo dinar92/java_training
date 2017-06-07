@@ -5,14 +5,14 @@ import java.util.List;
 
 /**
  * Created by pacman on 27.04.17.
- * Decorator for creating a eco-friendly trash storage.
+ * Decorator for creating a eco-friendly storage storage.
  */
 public class Ecofriendly extends StorageDecorator {
 
     /**
      * Container for products, that will be process.
      */
-    List<Food> containerForReproduct = new ArrayList<>();
+    List<Food> storage = new ArrayList<>();
 
     /**
      * Definition of a decorated storage.
@@ -32,7 +32,7 @@ public class Ecofriendly extends StorageDecorator {
         boolean added = false;
         for (CanReproduct product : CanReproduct.values()) {
             if (food.getName().equalsIgnoreCase(product.toString())) {
-                added = this.containerForReproduct.add(food);
+                added = this.storage.add(food);
                 break;
             }
         }

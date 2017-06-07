@@ -3,36 +3,20 @@ package ru.job4j.foodStorage;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static org.hamcrest.core.Is.is;
 
 /**
  * Created by pacman on 24.04.17.
- * Tests class Trash.
+ * Tests class Warehouse.
  */
-public class TrashTest {
+public class WarehouseTest {
 
     /**
      * Tests conformityTest().
      */
     @Test
-    public void whenProductIsSpoiledThenTrue() {
-        int yearOfCreate = 2017, yearOfExpiry = 2017;
-        int monthOfCreate = 2, monthOfExpiry = 3;
-        int dayOfCreate = 23, dayOfExpiry = 30;
-        Food food = new Food("Meat", 6.0);
-
-        food.setCreateDate(yearOfCreate, monthOfCreate, dayOfCreate);
-        food.setExpiryDate(yearOfExpiry, monthOfExpiry, dayOfExpiry);
-
-        assertThat(new Trash().conformityTest(food), is(true));
-    }
-
-    /**
-     * Tests conformityTest().
-     */
-    @Test
-    public void whenProductIsGoodForTrashThenFalse() {
+    public void whenProductIsFreshThenTrue() throws Exception {
         int yearOfCreate = 2017, yearOfExpiry = 2017;
         int monthOfCreate = 5, monthOfExpiry = 7;
         int dayOfCreate = 23, dayOfExpiry = 30;
@@ -41,7 +25,23 @@ public class TrashTest {
         food.setCreateDate(yearOfCreate, monthOfCreate, dayOfCreate);
         food.setExpiryDate(yearOfExpiry, monthOfExpiry, dayOfExpiry);
 
-        assertThat(new Trash().conformityTest(food), is(false));
+        assertThat(new Warehouse().conformityTest(food), is(true));
+    }
+
+    /**
+     * Tests conformityTest().
+     */
+    @Test
+    public void whenProductIsBadThenFalse() throws Exception {
+        int yearOfCreate = 2017, yearOfExpiry = 2017;
+        int monthOfCreate = 1, monthOfExpiry = 5;
+        int dayOfCreate = 23, dayOfExpiry = 30;
+        Food food = new Food("Meat", 6.0);
+
+        food.setCreateDate(yearOfCreate, monthOfCreate, dayOfCreate);
+        food.setExpiryDate(yearOfExpiry, monthOfExpiry, dayOfExpiry);
+
+        assertThat(new Warehouse().conformityTest(food), is(false));
     }
 
     /**
@@ -64,12 +64,12 @@ public class TrashTest {
     public void whenGetProductsThenReturnAllInStorage() {
         Food meat = new Food("Meat", 6.0);
         Food cheese = new Food("Cheese", 2.0);
-        Trash trash = new Trash();
+        Warehouse warehouse = new Warehouse();
 
-        trash.addProduct(meat);
-        trash.addProduct(cheese);
+        warehouse.addProduct(meat);
+        warehouse.addProduct(cheese);
 
-        assertThat(trash.getProducts(), contains(meat, cheese));
+        assertThat(warehouse.getProducts(), contains(meat, cheese));
     }
 
     /**
@@ -79,14 +79,14 @@ public class TrashTest {
     public void whenClearStorageThenAllIsRemoved() {
         Food meat = new Food("Meat", 6.0);
         Food cheese = new Food("Cheese", 2.0);
-        Trash trash = new Trash();
+        Warehouse warehouse = new Warehouse();
         boolean storageIsEmpty = true;
 
-        trash.addProduct(meat);
-        trash.addProduct(cheese);
-        trash.clearStorage();
+        warehouse.addProduct(meat);
+        warehouse.addProduct(cheese);
+        warehouse.clearStorage();
 
-        assertThat(trash.getProducts().isEmpty(), is(storageIsEmpty));
+        assertThat(warehouse.getProducts().isEmpty(), is(storageIsEmpty));
     }
 
     /**
@@ -96,13 +96,13 @@ public class TrashTest {
     public void whenRemoveProductThenItIsRemoved() {
         Food meat = new Food("Meat", 6.0);
         Food cheese = new Food("Cheese", 2.0);
-        Trash trash = new Trash();
+        Warehouse warehouse = new Warehouse();
         boolean storageContainsProduct = false;
 
-        trash.addProduct(meat);
-        trash.addProduct(cheese);
-        trash.removeProduct(meat);
+        warehouse.addProduct(meat);
+        warehouse.addProduct(cheese);
+        warehouse.removeProduct(meat);
 
-        assertThat(trash.getProducts().contains(meat), is(storageContainsProduct));
+        assertThat(warehouse.getProducts().contains(meat), is(storageContainsProduct));
     }
 }
