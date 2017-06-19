@@ -70,7 +70,7 @@ public class SimpleGeneratorTest {
         Map<String, String> args = new HashMap<>();
         args.put("name", "Nick");
         String stringForFormatting = "Hello, ${name} ${surname}";
-        String expectedMessage = "The next values not found among args: ${surname}.";
+        String expectedMessage = "The next values not found among args: surname.";
 
         expectedException.expect(KeyNotFoundException.class);
         expectedException.expectMessage(expectedMessage);

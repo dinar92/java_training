@@ -28,7 +28,8 @@ public class SimpleGenerator implements Template {
         } else {
             ArrayList<String> redundantArgs = new ArrayList<>();
             ArrayList<String> unsupportedKeys;
-            String baseRegExp = "\\$\\{[\\w]+\\}";
+            String baseRegExp = "\\$\\{([\\w]+)\\}";
+            Pattern pattern = Pattern.compile(baseRegExp);
             String regex = "";
 
             for (String key : args.keySet()) {
@@ -42,7 +43,7 @@ public class SimpleGenerator implements Template {
                     redundantArgs.add(key);
                 }
             }
-            unsupportedKeys = this.checkOfUnSupportKeys(template, baseRegExp);
+            unsupportedKeys = this.checkOfUnSupportKeys(template, pattern);
             if (unsupportedKeys.size() > 0) {
                 throw new KeyNotFoundException(unsupportedKeys);
             } else if (redundantArgs.size() > 0) {
@@ -55,16 +56,15 @@ public class SimpleGenerator implements Template {
     /**
      * Checks template of string for the presence of the regular expression.
      * @param template - template of the string.
-     * @param regex - the regular expression.
+     * @param pattern - the regular expression in compiled Pattern.
      * @return ArrayList of concurrences.
      */
-    private ArrayList<String> checkOfUnSupportKeys(String template, String regex) {
+    private ArrayList<String> checkOfUnSupportKeys(String template, Pattern pattern) {
         ArrayList<String> concurrences = new ArrayList<>();
-        Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(template);
 
         while (matcher.find()) {
-            concurrences.add(matcher.group());
+            concurrences.add(matcher.group(1));
         }
         return concurrences;
     }
