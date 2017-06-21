@@ -1,6 +1,5 @@
 package ru.job4j.formatting;
 
-
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -11,6 +10,11 @@ import java.util.regex.Pattern;
  * Inserts arguments into a text template.
  */
 public class SimpleGenerator implements Template {
+
+    /**
+     * The regular expression in compiled Pattern.
+     */
+    private final Pattern pattern = Pattern.compile("\\$\\{([\\w]+)\\}");
     /**
      * Generates a new string using the template and arguments.
      *
@@ -28,8 +32,6 @@ public class SimpleGenerator implements Template {
         } else {
             ArrayList<String> redundantArgs = new ArrayList<>();
             ArrayList<String> unsupportedKeys;
-            String baseRegExp = "\\$\\{([\\w]+)\\}";
-            Pattern pattern = Pattern.compile(baseRegExp);
             String regex = "";
 
             for (String key : args.keySet()) {
@@ -43,7 +45,7 @@ public class SimpleGenerator implements Template {
                     redundantArgs.add(key);
                 }
             }
-            unsupportedKeys = this.checkOfUnSupportKeys(template, pattern);
+            unsupportedKeys = this.checkOfUnSupportKeys(template);
             if (unsupportedKeys.size() > 0) {
                 throw new KeyNotFoundException(unsupportedKeys);
             } else if (redundantArgs.size() > 0) {
@@ -56,12 +58,11 @@ public class SimpleGenerator implements Template {
     /**
      * Checks template of string for the presence of the regular expression.
      * @param template - template of the string.
-     * @param pattern - the regular expression in compiled Pattern.
      * @return ArrayList of concurrences.
      */
-    private ArrayList<String> checkOfUnSupportKeys(String template, Pattern pattern) {
+    private ArrayList<String> checkOfUnSupportKeys(String template) {
         ArrayList<String> concurrences = new ArrayList<>();
-        Matcher matcher = pattern.matcher(template);
+        Matcher matcher = this.pattern.matcher(template);
 
         while (matcher.find()) {
             concurrences.add(matcher.group(1));
