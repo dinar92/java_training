@@ -83,9 +83,10 @@ public class Tracker {
 			}
 		}
 		Item[] sameName = new Item[counter];
-		for (int i = 0; i < sameName.length; i++) {
+		counter = 0;
+		for (int i = 0; i < this.position; i++) {
 			if (this.items[i].getName().equals(name)) {
-				sameName[i] = this.items[i];
+				sameName[counter++] = this.items[i];
 			}
 		}
 		return sameName;

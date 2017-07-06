@@ -64,13 +64,13 @@ public class Service {
         int filesCounter = 0;
         try (RandomAccessFile sourceFile = new RandomAccessFile(source, "r")) {
 
-            //Разбиваем файл на файлы с подмассивами строк по 500Мб.
+            //Разбиваем файл на файлы с подмассивами строк по 1Мб.
             while (sourceFile.getFilePointer() < sourceFile.length() - 1) {
                 File tmpFile = new File(String.format("%s.data", filesCounter++));
                 tmpFile.createNewFile();
                 int lineBytesCounter = 0;
                 try (RandomAccessFile raf = new RandomAccessFile(tmpFile, "rw")) {
-                    while (lineBytesCounter < 500000000 && sourceFile.getFilePointer() < sourceFile.length() - 1) {
+                    while (lineBytesCounter < 1000000 && sourceFile.getFilePointer() < sourceFile.length() - 1) {
                         String tmpLine = sourceFile.readLine();
                         lineBytesCounter += tmpLine.getBytes().length;
                         raf.writeBytes(tmpLine + "\n");
@@ -125,7 +125,8 @@ public class Service {
                 }
                 int i = 0, j = 0;
                 while (i < sortedArr.size() && j < tmpArray.size()) {
-                    if (sortedArr.get(i).compareTo(tmpArray.get(j)) > 0) {
+
+                    if (sortedArr.get(i).length() > (tmpArray.get(j).length())) {
                         sortedArr.add(i, tmpArray.get(j));
                         j++;
                     } else {

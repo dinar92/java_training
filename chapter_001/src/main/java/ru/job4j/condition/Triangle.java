@@ -1,5 +1,8 @@
 package ru.job4j.condition;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
 *Class implements triangle with area calculate function.
 *@author gimazetdinov
@@ -31,17 +34,17 @@ public class Triangle {
 	*@return area - area
 	*/
 	public double area() {
-		double sideA = this.a.distanceTo(this.b);
-		double sideB = this.b.distanceTo(this.c);
-		double sideC = this.c.distanceTo(this.a);
+		double sideA = new BigDecimal(this.a.distanceTo(this.b)).setScale(2, RoundingMode.UP).doubleValue();
+		double sideB = new BigDecimal(this.b.distanceTo(this.c)).setScale(2, RoundingMode.UP).doubleValue();
+		double sideC = new BigDecimal(this.c.distanceTo(this.a)).setScale(2, RoundingMode.UP).doubleValue();
 
-		if (sideA == sideB || sideB == sideC || sideC == sideA) {
+		if (sideA == 0.0 || sideB == 0.0 || sideC == 0.0) {
 			return Double.NaN;
-		} else if (sideA + sideB < sideC) {
+		} else if (sideA + sideB == sideC) {
 			return Double.NaN;
-		} else if (sideB + sideC < sideA) {
+		} else if (sideB + sideC == sideA) {
 			return Double.NaN;
-		} else if (sideC + sideA < sideB) {
+		} else if (sideC + sideA == sideB) {
 			return Double.NaN;
 		}
 

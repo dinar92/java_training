@@ -161,8 +161,8 @@ public class MenuTracker {
 	}
 
 	/**Shows a menu of bugs.*/
-	private class ShowBugs extends BaseAction {
 
+	private class ShowBugs extends BaseAction {
 		/**The constructor sets key and info of the action.
 		*@param key of the action
 		*@param info about the menu item*/
@@ -190,31 +190,9 @@ public class MenuTracker {
 		}
 	}
 
-	/**Searches the item by his ID.*/
-	private class FindById extends BaseAction {
-
-		/**The constructor sets key and info of the action.
-		*@param key of the action
-		*@param info about the menu item*/
-		FindById(int key, String info) {
-			super(key, info);
-		}
-
-		/**Executions the action.
-		*@param input - method of interaction with the outside
-		*@param tracker - the database emulation*/
-		public void execute(Input input, Tracker tracker) {
-			String answer = input.ask("Please, enter item's ID: ", tracker.getIds());
-			new ShowItem().execute(tracker.findById(answer));
-		}
-	}
-
-	/**The additional class for showing item's details.*/
-	private class ShowItem {
-
-		/**Shows details by the specified item.
-		*@param item - specified item*/
-		public void execute(Item item) {
+	/**Shows details by the specified item.
+	 *@param item - specified item*/
+	private void showItem(Item item) {
 			String type = "";
 			if (item instanceof Task) {
 				type = "task";
@@ -251,7 +229,6 @@ public class MenuTracker {
 				System.out.println(comInfo);
 			}
 		}
-	}
 
 	/**Shows field for searching by item's name and shows list of found items.*/
 	private class FindByName extends BaseAction {
@@ -269,8 +246,28 @@ public class MenuTracker {
 		public void execute(Input input, Tracker tracker) {
 			String answer = input.ask("Please, enter item's name: ");
 			for (Item item : tracker.findByName(answer)) {
-				new ShowItem().execute(item);
+				MenuTracker.this.showItem(item);
 			}
+		}
+
+	}
+
+	/**Searches the item by his ID.*/
+	private class FindById extends BaseAction {
+
+		/**The constructor sets key and info of the action.
+		 *@param key of the action
+		 *@param info about the menu item*/
+		FindById(int key, String info) {
+			super(key, info);
+		}
+
+		/**Executions the action.
+		 *@param input - method of interaction with the outside
+		 *@param tracker - the database emulation*/
+		public void execute(Input input, Tracker tracker) {
+			String answer = input.ask("Please, enter item's ID: ", tracker.getIds());
+			MenuTracker.this.showItem(tracker.findById(answer));
 		}
 	}
 

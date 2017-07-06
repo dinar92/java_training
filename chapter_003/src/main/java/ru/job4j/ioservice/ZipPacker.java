@@ -75,7 +75,7 @@ public class ZipPacker implements Packer {
     /**The local class of filter by specified files extensions.
      * @author gimazetdinov
      * @version 1.0*/
-    class Filter implements FileFilter {
+      class Filter implements FileFilter {
 
         /**List of extensions.*/
         String[] ext;

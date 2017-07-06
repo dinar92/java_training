@@ -28,9 +28,11 @@ public class Client {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Scanner console = new Scanner(System.in);
             String str = in.readLine();
+            System.out.println(str);
             do {
                 String question = console.nextLine();
                 out.println(question);
+                str = in.readLine();
                 while (!("Bye".equals(str)) && !(str.isEmpty())) {
                     System.out.println(str);
                     str = in.readLine();
