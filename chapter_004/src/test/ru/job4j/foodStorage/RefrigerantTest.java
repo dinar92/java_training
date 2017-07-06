@@ -17,7 +17,7 @@ public class RefrigerantTest {
      */
     public Food createFreshVegFood() {
         int yearOfCreate = 2017, yearOfExpiry = 2017;
-        int monthOfCreate = 5, monthOfExpiry = 7;
+        int monthOfCreate = 6, monthOfExpiry = 8;
         int dayOfCreate = 26, dayOfExpiry = 30;
         Food food = new Food("potato", 0.5);
         food.setCreateDate(yearOfCreate, monthOfCreate, dayOfCreate);
@@ -47,4 +47,18 @@ public class RefrigerantTest {
         assertThat(new Refrigerant(new Warehouse()).addProduct(food), is(true));
     }
 
+    /**
+     * Tests addProduct().
+     */
+    @Test
+    public void whenSetStorageShouldContainsIt() {
+        Shop shop = new Shop();
+        Refrigerant refrigerant = new Refrigerant(shop);
+        Food food = new Food("egg", 0.5);
+        boolean isInStorage = true;
+
+        refrigerant.addProduct(food);
+
+        assertThat(refrigerant.getProducts().contains(food), is(isInStorage));
+    }
 }

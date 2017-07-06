@@ -20,6 +20,7 @@ public class TurnTest {
 	}
 
 	/**Testing rotate().*/
+	@Test
 	public void whenArrayThenRotatedArray() {
 		final int[][] arr = {{1, 2, 3},
 							 {4, 5, 6},
@@ -27,6 +28,19 @@ public class TurnTest {
 		final int[][] rotatedArr = {{7, 4, 1},
 									{8, 5, 2},
 									{9, 6, 3}};
+		Turn obj = new Turn();
+		assertThat(obj.rotate(arr), is(rotatedArr));
+	}
+
+	/**Testing rotate().*/
+	@Test
+	public void whenArrayThenRotatedArrayAgain() {
+		final int[][] arr = {{9, 8, 7},
+				{6, 5, 4},
+				{3, 2, 1}};
+		final int[][] rotatedArr = {{3, 6, 9},
+				{2, 5, 8},
+				{1, 4, 7}};
 		Turn obj = new Turn();
 		assertThat(obj.rotate(arr), is(rotatedArr));
 	}

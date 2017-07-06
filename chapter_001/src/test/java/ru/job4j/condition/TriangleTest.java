@@ -23,16 +23,15 @@ public class TriangleTest {
 		Point point2 = new Point(x2, y2);
 		Point point3 = new Point(x3, y3);
 
-		final double expectedArea = 0.29;
+		final double expectedArea = 0.31;
 		final double error = 0.01;
-
 		Triangle triangle = new Triangle(point1, point2, point3);
 		assertThat(triangle.area(), closeTo(expectedArea, error));
 	}
 
 	/**Testing area() method of Triangle class width incorrect points.*/
 	@Test
-	public void whenSetIncorrPointsThenReturnNaN() {
+	public void whenSetSamePointsThenReturnNaN() {
 		final double x1 = 4.1, y1 = 5.5;
 		final double x2 = 6.5, y2 = 7.0;
 		final double x3 = 6.5, y3 = 7.0;
@@ -42,7 +41,24 @@ public class TriangleTest {
 		Point point3 = new Point(x3, y3);
 
 		final double expectedArea = Double.NaN;
-		//final double error = 0.01;
+
+		Triangle triangle = new Triangle(point1, point2, point3);
+		assertThat(triangle.area(), is(expectedArea));
+	}
+
+	/**Testing area() method of Triangle class width incorrect points, when
+     * impossible to build the triangle.*/
+	@Test
+	public void whenSetIncorrPointsThenReturnNaN() {
+		final double x1 = 0.0, y1 = 1.0;
+		final double x2 = 0.0, y2 = 2.0;
+		final double x3 = 0.0, y3 = 5.0;
+
+		Point point1 = new Point(x1, y1);
+		Point point2 = new Point(x2, y2);
+		Point point3 = new Point(x3, y3);
+
+		final double expectedArea = Double.NaN;
 
 		Triangle triangle = new Triangle(point1, point2, point3);
 		assertThat(triangle.area(), is(expectedArea));

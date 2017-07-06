@@ -13,6 +13,7 @@ public class EcofriendlyTest {
 
     /**
      * Returns overdue Food.
+     *
      * @return Food.
      */
     public Food createOverdueFood() {
@@ -47,4 +48,18 @@ public class EcofriendlyTest {
         assertThat(new Ecofriendly(new Trash()).addProduct(food), is(true));
     }
 
+    /**
+     * Tests addProduct().
+     */
+    @Test
+    public void whenSetStorageShouldContainsIt() {
+        Trash trash = new Trash();
+        Ecofriendly ecofriendly = new Ecofriendly(trash);
+        Food food = new Food("meat", 0.5);
+        boolean isInStorage = true;
+
+        ecofriendly.addProduct(food);
+
+        assertThat(ecofriendly.getProducts().contains(food), is(isInStorage));
+    }
 }

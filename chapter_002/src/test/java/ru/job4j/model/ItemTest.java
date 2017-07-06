@@ -2,7 +2,6 @@ package ru.job4j.model;
 
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.beans.SamePropertyValuesAs.samePropertyValuesAs;
 import static org.junit.Assert.assertThat;
 
 /**Testing Item.*/
@@ -32,15 +31,43 @@ public class ItemTest {
 		Item item = new Item();
 		String name = "name";
 		String text = "text";
-		final int maxSizeOfCommentsList = 30;
-		final int firstComment = 0;
 		final long currentTimeInMillis = 1485959504531L;
+		final String currentDateTime = "17:31 1/2/2017";
+		final int firstComment = 0;
 		Comment com = new Comment();
+
 		com.setAuthor(name);
 		com.setText(text);
 		com.setCreate(currentTimeInMillis);
 		item.addComment(text, name, currentTimeInMillis);
-		assertThat(item.getComments()[firstComment], samePropertyValuesAs(com));
+
+		assertThat(item.getComments()[firstComment].getCreate(), is(currentDateTime));
+		assertThat(item.getComments()[firstComment].getAuthor(), is(name));
+		assertThat(item.getComments()[firstComment].getText(), is(text));
+	}
+
+	/**Testing addComment(), when amount of comments more than 30
+	 * don't must add new comment.*/
+	@Test(expected = ArrayIndexOutOfBoundsException.class)
+	public void whenAddCommentsListIsFullThenNotAddNewCommment() {
+		Item item = new Item();
+		String name = new String();
+		String text = new String();
+		long currentTimeInMillis = 1485959504531L;
+		final int maxCountOfCommentsPlusOne = 30;
+
+		/**
+		 * Must create 30 comments.
+		 */
+		for (int i = 0; i <= maxCountOfCommentsPlusOne; i++) {
+			Comment com = new Comment();
+			com.setAuthor(String.valueOf(i));
+			com.setText(String.valueOf(i));
+			com.setCreate(currentTimeInMillis++);
+			item.addComment(text, name, currentTimeInMillis);
+		}
+
+		Comment comments = item.getComments()[maxCountOfCommentsPlusOne];
 	}
 
 	/**Testing setCreate(long millis) and getCreate().*/

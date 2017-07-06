@@ -18,23 +18,23 @@ import static org.mockito.Mockito.when;
 public class ClientTest {
 
     /**
-     * When response contains "Bye", then client exits.
+     * When client enter "exit", then client exits.
      *
      * @throws IOException IOException
      */
     @Test
-    public void whenResponseIsByeThenExit() throws IOException {
+    public void whenClientEnterExitThenExit() throws IOException {
 
         /**The client's console input emulation.*/
-        System.setIn(new ByteArrayInputStream("some text".getBytes()));
+        System.setIn(new ByteArrayInputStream("some question\nexit\n".getBytes()));
 
-        ByteArrayInputStream in = new ByteArrayInputStream("Bye".getBytes());
+        ByteArrayInputStream in = new ByteArrayInputStream("some answer\n\nBye\n".getBytes());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         Socket socket = mock(Socket.class);
         when(socket.getInputStream()).thenReturn(in);
         when(socket.getOutputStream()).thenReturn(out);
         Client client = new Client(socket);
         client.startClient();
-        assertThat(out.toString(), is("some text\n"));
+        assertThat(out.toString(), is("some question\nexit\n"));
     }
 }

@@ -99,4 +99,22 @@ public class ServiceTest {
             }
         }
     }
+
+    /**
+     * Tests big file textFileSort().
+     *
+     * @throws IOException IOException
+     */
+    @Test
+    public void whenBigTextFileSortThenNewSortedFile() throws IOException {
+        File fileForSort = new File("inputForSort.txt");
+
+        service.textFileSort(fileForSort);
+
+        try (RandomAccessFile expect = new RandomAccessFile(new File("expectedSort.data"), "r"); RandomAccessFile result = new RandomAccessFile(new File("destination.data"), "r")) {
+            while ((expect.getFilePointer() != expect.length()) && (result.getFilePointer() != result.length())) {
+                assertThat(result.readLine(), is(expect.readLine()));
+            }
+        }
+    }
 }

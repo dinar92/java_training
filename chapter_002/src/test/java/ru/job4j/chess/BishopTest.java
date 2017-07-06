@@ -33,6 +33,22 @@ public class BishopTest {
         }
     }
 
+    /**Tests way().*/
+    @Test
+    public void whenAnotherWayThenGetWayInArray() {
+        Board board = new Board();
+        Bishop bishop = new Bishop(board.desk[5][0], "white", board);
+
+        Cell[] expect = new Cell[3];
+        expect[0] = board.desk[5][0];
+        expect[1] = board.desk[6][1];
+        expect[2] = board.desk[7][2];
+
+        for (int i = 0; i < expect.length; i++) {
+            assertThat(bishop.way(board.desk[7][2])[i], is(expect[i]));
+        }
+    }
+
     /**Test move().*/
     @Test
     public void whenImpossibleMoveThenImpossibleMoveException() {

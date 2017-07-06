@@ -1,6 +1,7 @@
 package ru.job4j.calculator;
 
 import org.junit.Test;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -52,6 +53,18 @@ public class CalculatorTest {
 			e.printStackTrace();
 		}
 		assertThat(calc.getResult(), is(TWO));
+	}
+
+	/**
+	 * Test div() by zero.
+	 */
+	@Test(expected = ArithmeticException.class)
+	public void whenDivByZeroThenException() {
+		final double FOUR = 4.0;
+		final double ZERO = 0.0;
+		Calculator cal = new Calculator();
+
+		cal.div(FOUR, ZERO);
 	}
 
 	/**
