@@ -3,7 +3,7 @@ package ru.job4j.calculator;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by pacman on 19.04.17.
@@ -13,10 +13,10 @@ public class BaseCalculatorTest {
 
     /**
      * Gets the result of specified expression.
-     * @throws Exception
+     * @throws ArithmeticException ArithmeticException.
      */
     @Test
-    public void whenDoOperationThenGetRsult() throws ArithmeticException{
+    public void whenDoOperationThenGetRsult() throws ArithmeticException {
         BaseCalculator calc = new BaseCalculator();
         double arg1 = 5.0;
         double arg2 = 2.0;

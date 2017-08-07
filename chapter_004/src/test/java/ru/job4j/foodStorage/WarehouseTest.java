@@ -3,7 +3,7 @@ package ru.job4j.foodStorage;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.contains;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 /**
@@ -14,11 +14,12 @@ public class WarehouseTest {
 
     /**
      * Tests conformityTest().
+     * @throws Exception exception.
      */
     @Test
     public void whenProductIsFreshThenTrue() throws Exception {
         int yearOfCreate = 2017, yearOfExpiry = 2017;
-        int monthOfCreate = 6, monthOfExpiry = 9;
+        int monthOfCreate = 7, monthOfExpiry = 9;
         int dayOfCreate = 23, dayOfExpiry = 30;
         Food food = new Food("Meat", 6.0);
 
@@ -30,6 +31,7 @@ public class WarehouseTest {
 
     /**
      * Tests conformityTest().
+     * @throws Exception exception.
      */
     @Test
     public void whenProductIsBadThenFalse() throws Exception {

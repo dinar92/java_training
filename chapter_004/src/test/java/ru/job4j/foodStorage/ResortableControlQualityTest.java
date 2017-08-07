@@ -2,8 +2,9 @@ package ru.job4j.foodStorage;
 
 
 import org.junit.Test;
+
 import static org.hamcrest.Matchers.contains;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by pacman on 07.06.17.

@@ -15,6 +15,9 @@ import static org.hamcrest.core.Is.is;
  */
 public class InteractCalcTest {
 
+    /**
+     * The line separator.
+     */
     private final String ls = System.getProperty("line.separator");
 
     /**
@@ -26,8 +29,8 @@ public class InteractCalcTest {
                 "5.0",
                 "/",
                 "2.0",
-                "exit" +
-                        ls).getBytes());
+                "exit"
+                        + ls).getBytes());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         String result = String.join(ls,
                 "Enter first arg:",
@@ -53,8 +56,8 @@ public class InteractCalcTest {
                 "2.0",
                 "+",
                 "2.0",
-                "exit" +
-                        ls).getBytes());
+                "exit"
+                        + ls).getBytes());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         String result = String.join(ls,
                 "Enter first arg:",

@@ -4,44 +4,46 @@ import org.junit.Test;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by pacman on 24.04.17.
- * Tests class Trash.
+ * Tests class Shop.
  */
-public class TrashTest {
+public class ShopTest {
 
     /**
      * Tests conformityTest().
+     * @throws Exception exception.
      */
     @Test
-    public void whenProductIsSpoiledThenTrue() {
+    public void whenProductIsTooFreshThenFalse() throws Exception {
         int yearOfCreate = 2017, yearOfExpiry = 2017;
-        int monthOfCreate = 2, monthOfExpiry = 3;
+        int monthOfCreate = 4, monthOfExpiry = 5;
         int dayOfCreate = 23, dayOfExpiry = 30;
         Food food = new Food("Meat", 6.0);
 
         food.setCreateDate(yearOfCreate, monthOfCreate, dayOfCreate);
         food.setExpiryDate(yearOfExpiry, monthOfExpiry, dayOfExpiry);
 
-        assertThat(new Trash().conformityTest(food), is(true));
+        assertThat(new Shop().conformityTest(food), is(false));
     }
 
     /**
      * Tests conformityTest().
+     * @throws Exception exception.
      */
     @Test
-    public void whenProductIsGoodForTrashThenFalse() {
+    public void whenProductIsGoodForSaleThenTrue() throws Exception {
         int yearOfCreate = 2017, yearOfExpiry = 2017;
-        int monthOfCreate = 5, monthOfExpiry = 7;
+        int monthOfCreate = 4, monthOfExpiry = 8;
         int dayOfCreate = 23, dayOfExpiry = 30;
         Food food = new Food("Meat", 6.0);
 
         food.setCreateDate(yearOfCreate, monthOfCreate, dayOfCreate);
         food.setExpiryDate(yearOfExpiry, monthOfExpiry, dayOfExpiry);
 
-        assertThat(new Trash().conformityTest(food), is(false));
+        assertThat(new Shop().conformityTest(food), is(true));
     }
 
     /**
@@ -64,12 +66,12 @@ public class TrashTest {
     public void whenGetProductsThenReturnAllInStorage() {
         Food meat = new Food("Meat", 6.0);
         Food cheese = new Food("Cheese", 2.0);
-        Trash trash = new Trash();
+        Shop shop = new Shop();
 
-        trash.addProduct(meat);
-        trash.addProduct(cheese);
+        shop.addProduct(meat);
+        shop.addProduct(cheese);
 
-        assertThat(trash.getProducts(), contains(meat, cheese));
+        assertThat(shop.getProducts(), contains(meat, cheese));
     }
 
     /**
@@ -79,14 +81,14 @@ public class TrashTest {
     public void whenClearStorageThenAllIsRemoved() {
         Food meat = new Food("Meat", 6.0);
         Food cheese = new Food("Cheese", 2.0);
-        Trash trash = new Trash();
+        Shop shop = new Shop();
         boolean storageIsEmpty = true;
 
-        trash.addProduct(meat);
-        trash.addProduct(cheese);
-        trash.clearStorage();
+        shop.addProduct(meat);
+        shop.addProduct(cheese);
+        shop.clearStorage();
 
-        assertThat(trash.getProducts().isEmpty(), is(storageIsEmpty));
+        assertThat(shop.getProducts().isEmpty(), is(storageIsEmpty));
     }
 
     /**
@@ -96,13 +98,13 @@ public class TrashTest {
     public void whenRemoveProductThenItIsRemoved() {
         Food meat = new Food("Meat", 6.0);
         Food cheese = new Food("Cheese", 2.0);
-        Trash trash = new Trash();
+        Shop shop = new Shop();
         boolean storageContainsProduct = false;
 
-        trash.addProduct(meat);
-        trash.addProduct(cheese);
-        trash.removeProduct(meat);
+        shop.addProduct(meat);
+        shop.addProduct(cheese);
+        shop.removeProduct(meat);
 
-        assertThat(trash.getProducts().contains(meat), is(storageContainsProduct));
+        assertThat(shop.getProducts().contains(meat), is(storageContainsProduct));
     }
 }

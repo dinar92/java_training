@@ -2,7 +2,7 @@ package ru.job4j.foodStorage;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 /**
@@ -13,11 +13,12 @@ public class RefrigerantTest {
 
     /**
      * Returns overdue Food.
+     *
      * @return Food.
      */
     public Food createFreshVegFood() {
         int yearOfCreate = 2017, yearOfExpiry = 2017;
-        int monthOfCreate = 6, monthOfExpiry = 8;
+        int monthOfCreate = 7, monthOfExpiry = 9;
         int dayOfCreate = 26, dayOfExpiry = 30;
         Food food = new Food("potato", 0.5);
         food.setCreateDate(yearOfCreate, monthOfCreate, dayOfCreate);

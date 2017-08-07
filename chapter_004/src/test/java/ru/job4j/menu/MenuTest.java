@@ -2,12 +2,11 @@ package ru.job4j.menu;
 
 import org.junit.Test;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Tests class Menu.
@@ -88,7 +87,7 @@ public class MenuTest {
         try {
             menu.deleteItem("2");
             menu.searchItem("2");
-        }catch (NotFoundItemException ex) {
+        } catch (NotFoundItemException ex) {
             wasRemoved = true;
         }
         assertThat(wasRemoved, is(true));
