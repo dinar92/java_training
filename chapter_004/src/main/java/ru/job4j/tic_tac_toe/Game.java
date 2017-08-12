@@ -2,6 +2,7 @@ package ru.job4j.tic_tac_toe;
 
 import ru.job4j.boardGame.Display;
 import ru.job4j.boardGame.GameBoard;
+import ru.job4j.boardGame.Player;
 import ru.job4j.boardGame.Stage;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -54,7 +55,7 @@ class Game implements Stage {
      * @param countOfCells the cunt of cells.
      * @param player1      first player.
      * @param player2      second player.
-     *                     @param winner winner.
+     * @param winner       winner.
      */
     Game(Display display, GameBoard board, AtomicInteger countOfCells, AbstractPlayer player1, AbstractPlayer player2, AbstractPlayer winner) {
         this.display = display;
@@ -94,10 +95,10 @@ class Game implements Stage {
      */
     @Override
     public void action() {
-        while (!checkForGameEnd() || !isDraw()) {
+        while (!checkForGameEnd()) {
             player1.doMove();
             this.showInfo();
-            if (checkForGameEnd() || isDraw()) {
+            if (checkForGameEnd()) {
                 break;
             }
             player2.doMove();
@@ -112,10 +113,10 @@ class Game implements Stage {
      */
     public boolean checkForGameEnd() {
         boolean isEnd = false;
-        if (this.finder.checkAllLines(this.board, this.countOfCells, this.player1.getState()).size() == countOfCells.get()) {
+        if (this.isWin(this.player1)) {
             this.winner.setPlayer(this.player1);
             isEnd = true;
-        } else if (this.finder.checkAllLines(this.board, this.countOfCells, this.player2.getState()).size() == countOfCells.get()) {
+        } else if (this.isWin(this.player2)) {
             this.winner.setPlayer(this.player2);
             isEnd = true;
         } else if (this.isDraw()) {
@@ -132,6 +133,16 @@ class Game implements Stage {
      * @return draw or not.
      */
     public boolean isDraw() {
-        return (this.finder.checkAllLines(this.board, new AtomicInteger(1), TicTacState.EMPTY).size() == 0) ? true : false;
+        return !this.isWin(this.player1) && !this.isWin(this.player2) && this.finder.checkAllLines(this.board, new AtomicInteger(1), TicTacState.EMPTY).size() == 0;
+    }
+
+    /**
+     * Defines the winner.
+     *
+     * @param player The player.
+     * @return is win.
+     */
+    public boolean isWin(Player player) {
+        return this.finder.checkAllLines(this.board, this.countOfCells, player.getState()).size() == countOfCells.get();
     }
 }
