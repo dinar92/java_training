@@ -49,4 +49,21 @@ public class ConvertListTest {
         Assert.assertThat(new ConvertList().toArray(list, rowsCount), is(array));
     }
 
+    /**
+     * Tests convert().
+     */
+    @Test
+    public void whenSetListOfArraysShouldReturnOneList() {
+        List<Integer> expect = new ArrayList<>();
+        for (int elem = 1; elem < 10; elem++) {
+            expect.add(elem);
+        }
+
+        List<int[]> inputList = new ArrayList<>();
+        inputList.add(new int[] {1, 2});
+        inputList.add(new int[] {3, 4, 5, 6});
+        inputList.add(new int[] {7, 8, 9});
+
+        Assert.assertThat(new ConvertList().convert(inputList), is(expect));
+    }
 }

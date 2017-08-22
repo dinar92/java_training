@@ -51,4 +51,19 @@ public class ConvertList {
         }
         return array;
     }
+
+    /**
+     * Converts the list of arrays to one list.
+     * @param list the list of arrays.
+     * @return List.
+     */
+    public List<Integer> convert(List<int[]> list) {
+        List<Integer> converted = new ArrayList<>();
+        for (int[] intsArray : list) {
+            for (int elem : intsArray) {
+                converted.add(elem);
+            }
+        }
+        return converted;
+    }
 }
