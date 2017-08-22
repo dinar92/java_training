@@ -31,7 +31,7 @@ public class SpeedTesterTest {
     public void whenLinkedListThenGetResultOfAdd() {
         long time = tester.add(new LinkedList<String>(), amountOfStrings);
         System.out.println(String.format("LinkedList : add = %s", time));
-        Assert.assertThat(time, Matchers.greaterThan(0l));
+        Assert.assertThat(time, Matchers.greaterThan(0L));
     }
 
     /**
@@ -41,7 +41,7 @@ public class SpeedTesterTest {
     public void whenLinkedListThenGetResultOfRemove() {
         long time = tester.delete(new LinkedList<String>(), amountOfStrings);
         System.out.println(String.format("LinkedList : delete = %s", time));
-        Assert.assertThat(time, Matchers.greaterThan(0l));
+        Assert.assertThat(time, Matchers.greaterThan(0L));
     }
 
     /**
@@ -51,7 +51,7 @@ public class SpeedTesterTest {
     public void whenArrayListThenGetResultOfAdd() {
         long time = tester.add(new ArrayList<>(), amountOfStrings);
         System.out.println(String.format("ArrayList : add = %s", time));
-        Assert.assertThat(time, Matchers.greaterThan(0l));
+        Assert.assertThat(time, Matchers.greaterThan(0L));
     }
 
     /**
@@ -61,7 +61,7 @@ public class SpeedTesterTest {
     public void whenArrayListThenGetResultOfRemove() {
         long time = tester.delete(new ArrayList<String>(), amountOfStrings);
         System.out.println(String.format("ArrayList : delete = %s", time));
-        Assert.assertThat(time, Matchers.greaterThan(0l));
+        Assert.assertThat(time, Matchers.greaterThan(0L));
     }
 
     /**
@@ -71,7 +71,7 @@ public class SpeedTesterTest {
     public void whenTreeSetThenGetResultOfAdd() {
         long time = tester.add(new TreeSet<String>(), amountOfStrings);
         System.out.println(String.format("TreeSet : add = %s", time));
-        Assert.assertThat(time, Matchers.greaterThan(0l));
+        Assert.assertThat(time, Matchers.greaterThan(0L));
     }
 
     /**
@@ -81,6 +81,6 @@ public class SpeedTesterTest {
     public void whenTreeSetThenGetResultOfRemove() {
         long time = tester.delete(new TreeSet<String>(), amountOfStrings);
         System.out.println(String.format("TreeSet: delete = %s", time));
-        Assert.assertThat(time, Matchers.greaterThan(0l));
+        Assert.assertThat(time, Matchers.greaterThan(0L));
     }
 }

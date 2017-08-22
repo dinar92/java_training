@@ -31,7 +31,12 @@ public class GameTest {
         State naught = TicTacState.NAUGHT;
         String[] coordinates = {"a1", "a2", "a3", "b1", "b2", "b3", "c1", "c2", "c3"};
         boolean expectIsDraw = true;
-        Game game = new Game(new ConsoleDisplay(), board, countOfCells, new AbstractPlayer(), new AbstractPlayer(), new AbstractPlayer());
+        AbstractPlayer player1 = new AbstractPlayer();
+        player1.setPlayer(new User(board, new ConsoleInput(), cross, "Player1"));
+        AbstractPlayer player2 = new AbstractPlayer();
+        player2.setPlayer(new User(board, new ConsoleInput(), naught, "Player2"));
+        AbstractPlayer winner = new AbstractPlayer();
+        Game game = new Game(new ConsoleDisplay(), board, countOfCells, player1, player2, winner);
 
         board.setState(coordinates[0], cross);
         board.setState(coordinates[1], naught);
@@ -61,7 +66,12 @@ public class GameTest {
         State empty = TicTacState.EMPTY;
         String[] coordinates = {"a1", "a2", "a3", "b1", "b2", "b3", "c1", "c2", "c3"};
         boolean expectIsNotDraw = false;
-        Game game = new Game(new ConsoleDisplay(), board, countOfCells, new AbstractPlayer(), new AbstractPlayer(), new AbstractPlayer());
+        AbstractPlayer player1 = new AbstractPlayer();
+        player1.setPlayer(new User(board, new ConsoleInput(), cross, "Player1"));
+        AbstractPlayer player2 = new AbstractPlayer();
+        player2.setPlayer(new User(board, new ConsoleInput(), naught, "Player2"));
+        AbstractPlayer winner = new AbstractPlayer();
+        Game game = new Game(new ConsoleDisplay(), board, countOfCells, player1, player2, winner);
 
         board.setState(coordinates[0], cross);
         board.setState(coordinates[1], naught);

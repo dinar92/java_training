@@ -14,3 +14,7 @@ target/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+Будет удалено .gitignore
+Будет удалено src/main/java/ru/job4j/collectionsLite/collectionsFramework/package-info.java
+Будет удалено src/main/java/ru/job4j/collectionsLite/package-info.java
+Будет удалено src/test/java/ru/job4j/collectionsLite/collectionsFramework/package-info.java
