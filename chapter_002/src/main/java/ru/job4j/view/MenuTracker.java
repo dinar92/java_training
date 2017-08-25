@@ -6,6 +6,8 @@ import ru.job4j.model.Task;
 import ru.job4j.model.Bug;
 import ru.job4j.model.Comment;
 
+import java.util.ArrayList;
+
 /**Implementation of console user interface.
 *@version 2.0
 *@author gimazetdinov
@@ -29,11 +31,8 @@ public class MenuTracker {
 	/**Sum of actions.*/
 	private final int sumOfActions = 8;
 
-	/**The counter of actions.*/
-	private int counter = 0;
-
 	/**The array of menu's items.*/
-	private UserAction[] actions = new UserAction[sumOfActions];
+	private ArrayList<UserAction> actions = new ArrayList<>(sumOfActions);
 
 	/**Allowable user's input for type of item to be added.*/
 	private String[] allowableTypeInput = {"task", "bug"};
@@ -64,20 +63,20 @@ public class MenuTracker {
 
 	/**Fills menu of local class objects.*/
 	public void fillAction() {
-		this.actions[counter++] = new AddItem(keyAddItem, "Add the new item");
-		this.actions[counter++] = new ShowTasks(keyShowTasks, "Show all tasks");
-		this.actions[counter++] = new ShowBugs(keyShowBugs, "Show all bugs");
-		this.actions[counter++] = new FindById(keyFindById, "Show info about an item by ID");
-		this.actions[counter++] = new FindByName(keyFindByName, "Show info about an item by name");
-		this.actions[counter++] = new DeleteItem(keyDeleteItem, "Delete the item");
-		this.actions[counter++] = new UpdateItem(keyUpdateItem, "Edit the item");
-		this.actions[counter++] = new AddComment(keyAddComment, "Add a comment to the item");
+		this.actions.add(new AddItem(keyAddItem, "Add the new item"));
+		this.actions.add(new ShowTasks(keyShowTasks, "Show all tasks"));
+		this.actions.add(new ShowBugs(keyShowBugs, "Show all bugs"));
+		this.actions.add(new FindById(keyFindById, "Show info about an item by ID"));
+		this.actions.add(new FindByName(keyFindByName, "Show info about an item by name"));
+		this.actions.add(new DeleteItem(keyDeleteItem, "Delete the item"));
+		this.actions.add(new UpdateItem(keyUpdateItem, "Edit the item"));
+		this.actions.add(new AddComment(keyAddComment, "Add a comment to the item"));
 	}
 
 	/**Starts the selected menu's item to execute.
 	*@param key - key of the local class*/
 	public void select(int key) {
-		this.actions[key].execute(this.input, this.tracker);
+		this.actions.get(key).execute(this.input, this.tracker);
 	}
 
 	/**Shows info and key about every local class.*/
@@ -89,12 +88,12 @@ public class MenuTracker {
 		}
 	}
 
-	/**Return array of actions keys.
+	/**Return arrayList of actions keys.
 	*@return array of keys*/
-	public int[] getKeysRange() {
-		int[] keysRange = new int[this.sumOfActions];
+	public ArrayList<Integer> getKeysRange() {
+		ArrayList<Integer> keysRange = new ArrayList<>(this.sumOfActions);
 		for (int index = 0; index < this.sumOfActions; index++) {
-			keysRange[index] = this.actions[index].key();
+			keysRange.add(this.actions.get(index).key());
 		}
 		return keysRange;
 	}

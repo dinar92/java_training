@@ -1,7 +1,8 @@
 package ru.job4j.data;
 
 import ru.job4j.model.Item;
-import java.util.Arrays;
+
+import java.util.ArrayList;
 
 /**An emulator of database.
 *@author gimazetdinov
@@ -14,7 +15,7 @@ public class Tracker {
 	public static final int MAX_AMOUNT = 30;
 
 	/**Data store.*/
-	private Item[] items = new Item[MAX_AMOUNT];
+	private ArrayList<Item> items = new ArrayList<>(MAX_AMOUNT);
 
 	/**The number of filled elements.*/
 	private int position = 0;
@@ -24,8 +25,8 @@ public class Tracker {
 	*@return item - added item
 	*/
 	public Item add(Item item) {
-		this.items[this.position] = item;
-		return this.items[this.position++];
+		this.items.add(this.position, item);
+		return this.items.get(this.position++);
 	}
 
 	/**To find item by his ID.
@@ -35,8 +36,8 @@ public class Tracker {
 	public Item findById(String id) {
 		Item foundItem = null;
 		for (int i = 0; i < this.position; i++) {
-			if (this.items[i].getId().equals(id)) {
-				foundItem = this.items[i];
+			if (this.items.get(i).getId().equals(id)) {
+				foundItem = this.items.get(i);
 				break;
 			}
 		}
@@ -48,8 +49,8 @@ public class Tracker {
 	*/
 	public void update(Item updated) {
 		for (int i = 0; i < this.position; i++) {
-			if (this.items[i].getId().equals(updated.getId())) {
-				this.items[i] = updated;
+			if (this.items.get(i).getId().equals(updated.getId())) {
+				this.items.set(i, updated);
 			}
 		}
 	}
@@ -57,16 +58,16 @@ public class Tracker {
 	/**Return all items.
 	*@return items - all items
 	*/
-	public Item[] getAll() {
-		return Arrays.copyOf(this.items, position);
+	public ArrayList<Item> getAll() {
+		return (ArrayList<Item>) this.items.clone();
 	}
 
 	/**Returns the array of ids of all items.
 	*@return array of ids*/
-	public String[] getIds() {
-		String[] ids = new String[this.getAll().length];
-		for (int index = 0; index < this.getAll().length; index++) {
-			ids[index] = this.getAll()[index].getId();
+	public ArrayList<String> getIds() {
+		ArrayList<String> ids = new ArrayList<>(this.getAll().size());
+		for (int index = 0; index < this.getAll().size(); index++) {
+			ids.add(index, this.getAll().get(index).getId());
 		}
 		return ids;
 	}
@@ -75,35 +76,27 @@ public class Tracker {
 	*@param name - name
 	*@return item - item found
 	*/
-	public Item[] findByName(String name) {
+	public ArrayList<Item> findByName(String name) {
 		int counter = 0;
 		for (int i = 0; i < this.position; i++) {
-			if (this.items[i].getName().equals(name)) {
+			if (this.items.get(i).getName().equals(name)) {
 				counter++;
 			}
 		}
-		Item[] sameName = new Item[counter];
+		ArrayList<Item> sameName = new ArrayList<>(counter);
 		counter = 0;
 		for (int i = 0; i < this.position; i++) {
-			if (this.items[i].getName().equals(name)) {
-				sameName[counter++] = this.items[i];
+			if (this.items.get(i).getName().equals(name)) {
+				sameName.add(counter++, this.items.get(i));
 			}
 		}
 		return sameName;
 	}
 
-	/**Deletes specified item.
+	/** Removes the first occurrence of the specified element from this list.
 	*@param item - specified item
 	*/
 	public void delete(Item item) {
-		for (int out = 0; out < this.position; out++) {
-			if (this.items[out].equals(item)) {
-				for (int in = out; out < this.position - 1; in++) {
-					this.items[in] = this.items[in + 1];
-				}
-				this.position--;
-				this.items[this.position] = null;
-			}
-		}
+		this.items.remove(item);
 	}
 }

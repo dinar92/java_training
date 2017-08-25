@@ -1,5 +1,7 @@
 package ru.job4j.view;
 
+import java.util.ArrayList;
+
 /**Class for testing console user interface.
 *@author gimazetdinov
 *@version 1.0
@@ -38,6 +40,18 @@ public class StubInput implements Input {
 	*@param array - allowable input array of strings
 	*@return an allowable user's input*/
 	public String ask(String question, String[] array) {
+		return this.ask(question);
+	}
+
+	/**
+	 * Method for interaction.
+	 *
+	 * @param question - question
+	 * @param array    - allowable input list.
+	 * @param <E> - type of value.
+	 * @return an allowable user's input
+	 */
+	public <E> String ask(String question, ArrayList<E> array) {
 		return this.ask(question);
 	}
 }
