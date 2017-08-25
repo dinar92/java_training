@@ -42,6 +42,9 @@ public class ConvertList {
         int currentElemInRow = 0, rowCounter = 0;
         int[][] array = new int[rows][elemsInRow];
         for (Integer elem : workList) {
+            if (elem == null) {
+                continue;
+            }
             if (currentElemInRow == elemsInRow) {
                 currentElemInRow = 0;
                 rowCounter++;
