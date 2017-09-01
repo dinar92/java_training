@@ -4,6 +4,7 @@ import ru.job4j.boardGame.Display;
 import ru.job4j.boardGame.GameBoard;
 import ru.job4j.boardGame.Player;
 import ru.job4j.boardGame.Stage;
+import ru.job4j.boardGame.State;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -46,6 +47,11 @@ class Game implements Stage {
      * The consecutive cells finder.
      */
     private final ConsecutiveCellsFinder finder = new ConsecutiveCellsFinder();
+
+    /**
+     * The start point for search a winner.
+     */
+    private static final int START = 1;
 
     /**
      * Default constructor.
@@ -133,7 +139,17 @@ class Game implements Stage {
      * @return is win.
      */
     public boolean isWin(Player player) {
-        return this.finder.checkAllLines(this.board, this.countOfCells, player.getState()).size() == countOfCells.get();
+        boolean result = false;
+        for (int y = 'a'; y <= ('a' + this.board.getSize() - this.countOfCells.get()); y++) {
+            for (int x = '1'; x <= ('1' + this.board.getSize() - this.countOfCells.get()); x++) {
+                if (this.traversal(player.getState(), this.START, y, x, 1, 0)
+                        || this.traversal(player.getState(), this.START, y, x, 0, 1)
+                        || this.traversal(player.getState(), this.START, y, x, 1, 1)) {
+                    result = true;
+                }
+            }
+        }
+        return result;
     }
 
     /**
@@ -147,5 +163,29 @@ class Game implements Stage {
         } else {
             this.winner.setPlayer(new Computer(this.board, TicTacState.EMPTY, this.countOfCells, "Friendship"));
         }
+    }
+
+    /**
+     * Search for the same cells equal to the state.
+     * @param state the state of the player.
+     * @param countOfCells the start point for counting the same cells.
+     * @param y Y-axis.
+     * @param x X-axis.
+     * @param yOffset Y-axis offset.
+     * @param xOffset X-axis offset.
+     * @return has the indicated number of identical cells.
+     */
+    private boolean traversal(State state, Integer countOfCells, int y, int x, int yOffset, int xOffset) {
+        boolean result = false;
+        if (countOfCells == this.countOfCells.get()) {
+            result = true;
+        } else {
+            String nextCell = String.valueOf((char) (y + yOffset)) + String.valueOf((char) (x + xOffset));
+            String currentCell = String.valueOf((char) (y)) + String.valueOf((char) (x));
+            if (this.board.getState(currentCell) == this.board.getState(nextCell) && this.board.getState(currentCell) == state) {
+                result = traversal(state, countOfCells + 1, y + yOffset, x + xOffset, yOffset, xOffset);
+            }
+        }
+        return result;
     }
 }
