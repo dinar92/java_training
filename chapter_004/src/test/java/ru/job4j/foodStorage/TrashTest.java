@@ -34,7 +34,7 @@ public class TrashTest {
     @Test
     public void whenProductIsGoodForTrashThenFalse() {
         int yearOfCreate = 2017, yearOfExpiry = 2017;
-        int monthOfCreate = 6, monthOfExpiry = 8;
+        int monthOfCreate = 6, monthOfExpiry = 10;
         int dayOfCreate = 23, dayOfExpiry = 30;
         Food food = new Food("Meat", 6.0);
 

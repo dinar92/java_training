@@ -17,7 +17,7 @@ public class RefrigerantTest {
      * @return Food.
      */
     public Food createFreshVegFood() {
-        int yearOfCreate = 2017, yearOfExpiry = 2017;
+        int yearOfCreate = 2017, yearOfExpiry = 2018;
         int monthOfCreate = 7, monthOfExpiry = 12;
         int dayOfCreate = 26, dayOfExpiry = 30;
         Food food = new Food("potato", 0.5);
