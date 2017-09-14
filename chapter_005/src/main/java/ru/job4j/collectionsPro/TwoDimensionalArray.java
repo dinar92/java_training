@@ -12,7 +12,7 @@ public class TwoDimensionalArray implements Iterator {
     /**
      * The instance of the two-dimensional array.
      */
-    private final int[][] array;
+    private final int[] array;
 
     /**
      * The count of the current element in the array.
@@ -25,13 +25,14 @@ public class TwoDimensionalArray implements Iterator {
     private final int elementsInArray;
 
     /**
-     * Sets the instance if the array.
+     * Sets an instance of an one-dimensional array and
+     * a total count of items in the array.
      *
-     * @param array - the two-dimensional array of ints.
+     * @param array - one-dimensional array.
      */
     public TwoDimensionalArray(int[][] array) {
-        this.array = array;
-        this.elementsInArray = this.getAllCount();
+        this.elementsInArray = this.getAllCount(array);
+        this.array = this.getOneDimensionalArray(array);
     }
 
     /**
@@ -39,14 +40,34 @@ public class TwoDimensionalArray implements Iterator {
      *
      * @return the count.
      */
-    private int getAllCount() {
+    private int getAllCount(int[][] array) {
         int count = 0;
-        for (int[] line : this.array) {
+        for (int[] line : array) {
             for (int elem : line) {
                 count++;
             }
         }
         return count;
+    }
+
+    /**
+     * Converts an instance of two-dimensional array to
+     * an one-dimensional array.
+     *
+     * @param array - a two-dimensional array of ints.
+     * @return - an one dimensional array.
+     */
+    private int[] getOneDimensionalArray(int[][] array) {
+        int[] result = new int[this.getAllCount(array)];
+        int counterOfItemsInResultArray = 0;
+
+        for (int[] line : array) {
+            for (int item : line) {
+                result[counterOfItemsInResultArray] = item;
+                counterOfItemsInResultArray++;
+            }
+        }
+        return result;
     }
 
     /**
@@ -69,22 +90,11 @@ public class TwoDimensionalArray implements Iterator {
      */
     @Override
     public Object next() {
-        int innerCounter = 0;
         int result = 0;
-        if (this.currentElem == this.elementsInArray) {
+        try {
+            result = this.array[this.currentElem++];
+        } catch (IndexOutOfBoundsException ex) {
             throw new NoSuchElementException();
-        }
-        exit:
-        for (int[] line : this.array) {
-            for (int element : line) {
-                if (innerCounter == currentElem) {
-                    result = element;
-                    currentElem++;
-                    break exit;
-                } else {
-                    innerCounter++;
-                }
-            }
         }
         return result;
     }
