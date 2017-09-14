@@ -18,29 +18,33 @@ public class Converter {
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
         return new Iterator<Integer>() {
 
-            Iterator<Integer> inner = it.next();
+            Iterator<Integer> inner;
 
             @Override
             public boolean hasNext() {
+                if (inner == null) {
+                    inner = it.next();
+                }
                 boolean has = true;
+
                 if (!inner.hasNext()) {
-                    has = it.hasNext();
+                    try {
+                        inner = it.next();
+                        has = inner.hasNext();
+                    } catch (NoSuchElementException ex) {
+                        has = false;
+                    }
                 }
                 return has;
             }
 
             @Override
             public Integer next() {
-                Integer integer = 0;
-                while (this.inner.hasNext() || it.hasNext()) {
-                    try {
-                        integer = this.inner.next();
-                        break;
-                    } catch (NoSuchElementException ex) {
-                        inner = it.next();
-                    }
+                if (this.hasNext()) {
+                    return this.inner.next();
+                } else {
+                    throw new NoSuchElementException();
                 }
-                return integer;
             }
         };
     }
