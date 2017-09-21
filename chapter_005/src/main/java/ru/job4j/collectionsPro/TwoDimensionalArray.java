@@ -37,6 +37,7 @@ public class TwoDimensionalArray implements Iterator {
 
     /**
      * Returns the count of total elements in the array.
+     * @param array  - an array.
      *
      * @return the count.
      */
