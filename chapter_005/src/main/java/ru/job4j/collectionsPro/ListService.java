@@ -1,5 +1,7 @@
 package ru.job4j.collectionsPro;
 
+import java.util.LinkedList;
+
 /**
  * Created by pacman on 21.09.17.
  * Contains auxiliary methods.
@@ -13,13 +15,22 @@ public class ListService {
      * @return true - if has cycle.
      */
     public boolean hasCycle(Node node) {
-        Node current = node;
+        Node outer = node;
+        Node inner = node.next;
         boolean result = false;
-        while (current.next != null) {
-            if (!node.equals(current.next)) {
-                current = current.next;
+        LinkedList<Node> list = new LinkedList<>();
+        while (inner != null) {
+            for (Node nodeInList : list) {
+                if (nodeInList.element.equals(inner.element)) {
+                    result = true;
+                    break;
+                }
+            }
+            if (!result) {
+                list.add(outer);
+                outer = outer.next;
+                inner = inner.next;
             } else {
-                result = true;
                 break;
             }
         }
