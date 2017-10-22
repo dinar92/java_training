@@ -58,4 +58,22 @@ public class TreeTest {
 
         Assert.assertThat(iterator.hasNext(), is(false));
     }
+
+    /**
+     * Test isBinary() - true.
+     */
+    @Test
+    public void whenTreeIsBinaryThenTrue() {
+        Tree<String> tree = new Tree<>();
+        String element1 = "element1";
+        String element2 = "element2";
+        String element3 = "element3";
+        String element4 = "element4";
+
+        tree.add(element1, element2);
+        tree.add(element2, element3);
+        tree.add(element2, element4);
+
+        Assert.assertThat(tree.isBinary(), is(true));
+    }
 }
