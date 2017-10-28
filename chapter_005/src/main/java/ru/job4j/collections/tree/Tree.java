@@ -1,4 +1,4 @@
-package ru.job4j.collectionsPro.treeCollection;
+package ru.job4j.collections.treeCollection;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -157,7 +157,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      * list of child.
      * @param <E> - an universal type.
      */
-    private static final class Node<E> {
+    class Node<E> {
         /**
          * An elment of the node.
          */

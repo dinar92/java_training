@@ -1,4 +1,4 @@
-package ru.job4j.collectionsPro.mapCollection;
+package ru.job4j.collections.mapCollection;
 
 import org.hamcrest.core.IsNot;
 import org.junit.Assert;

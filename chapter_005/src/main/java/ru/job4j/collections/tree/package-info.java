@@ -1,4 +1,4 @@
 /**
  * Implementations of the tree structure.
  */
-package ru.job4j.collectionsPro.treeCollection;
+package ru.job4j.collections.treeCollection;

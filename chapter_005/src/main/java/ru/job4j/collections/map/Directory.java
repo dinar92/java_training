@@ -1,4 +1,4 @@
-package ru.job4j.collectionsPro.mapCollection;
+package ru.job4j.collections.mapCollection;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
