@@ -1,4 +1,4 @@
-package ru.job4j.collections.treeCollection;
+package ru.job4j.collections.tree;
 
 import org.junit.Assert;
 import org.junit.Test;

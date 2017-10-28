@@ -3,4 +3,4 @@
  *
  * Tests package collectionsPro.
  */
-package ru.job4j.collectionsPro;
+package ru.job4j.collections;

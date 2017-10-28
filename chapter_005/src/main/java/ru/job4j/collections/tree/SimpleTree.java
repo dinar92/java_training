@@ -1,4 +1,4 @@
-package ru.job4j.collections.treeCollection;
+package ru.job4j.collections.tree;
 
 /**
  * An interface for simple tree implementations.

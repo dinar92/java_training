@@ -1,4 +1,4 @@
-package ru.job4j.collectionsPro;
+package ru.job4j.collections;
 
 /**
  * Created by pacman on 20.09.17.
