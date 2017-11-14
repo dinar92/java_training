@@ -27,6 +27,10 @@ public class WordCounter implements Runnable {
         char space = ' ';
         while (charCounter < text.length()) {
             while (charCounter < text.length() && text.charAt(charCounter) != space) {
+                if (Thread.interrupted()) {
+                    System.out.println("The words counter thread was interrupted!");
+                    return;
+                }
                 charCounter++;
             }
             wordCounter++;

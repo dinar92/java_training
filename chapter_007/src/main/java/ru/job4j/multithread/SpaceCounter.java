@@ -27,6 +27,10 @@ public class SpaceCounter implements Runnable {
         int spaceCounter = 0;
         char space = ' ';
         while (charCounter < text.length()) {
+            if (Thread.interrupted()) {
+                System.out.println("The space counter thread was interrupted!");
+                return;
+            }
             if (text.charAt(charCounter) == space) {
                 spaceCounter++;
             }
