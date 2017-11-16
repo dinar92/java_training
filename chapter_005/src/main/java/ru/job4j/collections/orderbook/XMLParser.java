@@ -17,12 +17,12 @@ public class XMLParser extends DefaultHandler {
     /**
      * The string view for adding orders.
      */
-    private final String addOrder = "AddOrder";
+    private final static String addOrder = "AddOrder";
 
     /**
      * The string view for removing orders.
      */
-    private final String deleteOrder = "DeleteOrder";
+    private final static String deleteOrder = "DeleteOrder";
 
     /**
      * Sets the book store.

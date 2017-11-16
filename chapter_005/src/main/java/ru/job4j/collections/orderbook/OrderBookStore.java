@@ -1,8 +1,8 @@
 package ru.job4j.collections.orderbook;
 
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * The store of order books.
@@ -14,7 +14,7 @@ public class OrderBookStore<B extends Book, O extends Order> implements BookStor
     /**
      * The list based store.
      */
-    private final List<B> store = new LinkedList<>();
+    private final Map<String, B> store = new HashMap<>();
 
     /**
      * Adds the book to the store.
@@ -22,7 +22,7 @@ public class OrderBookStore<B extends Book, O extends Order> implements BookStor
      */
     @Override
     public void addBook(B book) {
-        this.store.add(book);
+        this.store.put(book.getBookName(), book);
     }
 
     /**
@@ -32,7 +32,7 @@ public class OrderBookStore<B extends Book, O extends Order> implements BookStor
      */
     @Override
     public boolean contains(B book) {
-        return this.store.contains(book);
+        return this.store.containsValue(book);
     }
 
     /**
@@ -43,14 +43,7 @@ public class OrderBookStore<B extends Book, O extends Order> implements BookStor
      */
     @Override
     public B getBookByName(String bookName) {
-        B result = null;
-        for (B book : this) {
-            if (book.getBookName().equals(bookName)) {
-                result = book;
-                break;
-            }
-        }
-        return result;
+        return this.store.get(bookName);
     }
 
     /**
@@ -69,11 +62,7 @@ public class OrderBookStore<B extends Book, O extends Order> implements BookStor
      */
     @Override
     public void addOrderToBook(B book, O order) {
-        for (Book iterator : this.store) {
-            if (iterator.equals(book)) {
-                iterator.addOrder(order);
-            }
-        }
+        this.store.get(book.getBookName()).addOrder(order);
     }
 
     /**
@@ -84,8 +73,9 @@ public class OrderBookStore<B extends Book, O extends Order> implements BookStor
     @Override
     public boolean containsInBooks(O order) {
         boolean result = false;
-        for (Book iterator : this.store) {
-            if (iterator.contains(order)) {
+        for (Map.Entry iterator : this.store.entrySet()) {
+            B book = (B) iterator.getValue();
+            if (book.contains(order)) {
                 result = true;
             }
         }
@@ -99,11 +89,7 @@ public class OrderBookStore<B extends Book, O extends Order> implements BookStor
      */
     @Override
     public void deleteOrderFromBook(B book, O order) {
-        for (Book iterator : this.store) {
-            if (iterator.equals(book)) {
-                iterator.deleteOrder(order);
-            }
-        }
+        this.store.get(book.getBookName()).deleteOrder(order);
     }
 
     /**
@@ -112,6 +98,6 @@ public class OrderBookStore<B extends Book, O extends Order> implements BookStor
      */
     @Override
     public Iterator<B> iterator() {
-        return this.store.iterator();
+        return this.store.values().iterator();
     }
 }
