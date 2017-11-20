@@ -39,4 +39,26 @@ public class TextHandlerTest {
         assertThat(outputStream.toString(), CoreMatchers.containsString(expectOut1));
         assertThat(outputStream.toString(), CoreMatchers.containsString(expectOut2));
     }
+
+    /**
+     * Tests the runWithTimer(long).
+     */
+    @Test
+    public void whenSetTimerThenSpecifiedThreadInterrupted() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        StringBuilder stringBuilder = new StringBuilder(text);
+
+        for (int i = 0; i < 1000; i++) {
+            stringBuilder.append(text);
+        }
+        new TextHandler(stringBuilder.toString()).runWithTimer(1);
+
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertThat(outputStream.toString(), CoreMatchers.containsString("Was interrupt"));
+    }
 }

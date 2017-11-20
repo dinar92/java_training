@@ -47,4 +47,21 @@ public class TextHandler {
 
         System.out.println("Processing finish!");
     }
+
+    public void runWithTimer(long milliseconds) {
+        Thread charCounter = new Thread(new CountChar(this.text));
+        Thread timer = new Thread(new Time(charCounter, milliseconds));
+
+        System.out.println("Processing start...");
+        charCounter.start();
+        timer.start();
+
+        try {
+            charCounter.join();
+            timer.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Processing finish!");
+    }
 }
