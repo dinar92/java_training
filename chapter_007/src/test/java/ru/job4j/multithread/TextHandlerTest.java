@@ -49,7 +49,7 @@ public class TextHandlerTest {
         System.setOut(new PrintStream(outputStream));
         StringBuilder stringBuilder = new StringBuilder(text);
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10000; i++) {
             stringBuilder.append(text);
         }
         new TextHandler(stringBuilder.toString()).runWithTimer(1);
