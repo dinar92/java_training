@@ -1,5 +1,8 @@
 package ru.job4j.collections;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Iterator;
 
 /**
@@ -7,17 +10,18 @@ import java.util.Iterator;
  * The simple implementation of the array list.
  * @param <E> - the object's type.
  */
+@ThreadSafe
 public class SimpleArrayList<E> implements Iterable<E> {
 
     /**
      * The array.
      */
-    private Object[] array;
+    @GuardedBy("this") private Object[] array;
 
     /**
      * The current index of the array.
      */
-    private int index = 0;
+    @GuardedBy("this") private int index = 0;
 
     /**
      * Sets the length of the initial array.
@@ -34,7 +38,7 @@ public class SimpleArrayList<E> implements Iterable<E> {
      * @return an Iterator.
      */
     @Override
-    public Iterator iterator() {
+    public synchronized Iterator iterator() {
         return new SimpleArrayListIterator<>(this.array);
     }
 
@@ -44,7 +48,7 @@ public class SimpleArrayList<E> implements Iterable<E> {
      *
      * @param element - the E type object.
      */
-    public void add(E element) {
+    public synchronized void add(E element) {
         if (this.index == this.array.length) {
             this.expand();
         }
@@ -65,7 +69,7 @@ public class SimpleArrayList<E> implements Iterable<E> {
      * @param index - the index.
      * @return - E type object.
      */
-    public E get(int index) {
+    public synchronized E get(int index) {
         return (E) this.array[index];
     }
 }

@@ -1,5 +1,8 @@
 package ru.job4j.collections;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -8,17 +11,18 @@ import java.util.NoSuchElementException;
  * @param <E> - the universal type.
  *
  */
+@ThreadSafe
 public class SimpleLinkedListIterator<E> implements Iterator<E> {
 
     /**
      * The instance of the linked list.
      */
-    private SimpleLinkedList<E> list;
+    @GuardedBy("this") private SimpleLinkedList<E> list;
 
     /**
      * The index of the current element.
      */
-    private int index = 0;
+    @GuardedBy("this") private int index = 0;
 
     /**
      * Sets the instance of the SimpleLinkedList<E>.
@@ -36,7 +40,7 @@ public class SimpleLinkedListIterator<E> implements Iterator<E> {
      * @return {@code true} if the iteration has more elements.
      */
     @Override
-    public boolean hasNext() {
+    public synchronized boolean hasNext() {
         boolean result = true;
         try {
             list.get(index);
@@ -52,7 +56,7 @@ public class SimpleLinkedListIterator<E> implements Iterator<E> {
      * @return the next element in the iteration.
      */
     @Override
-    public E next() {
+    public synchronized E next() {
         return list.get(index++);
     }
 }

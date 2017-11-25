@@ -1,5 +1,8 @@
 package ru.job4j.collections;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -9,17 +12,18 @@ import java.util.NoSuchElementException;
  *
  * @param <E> the universal type.
  */
+@ThreadSafe
 public class SimpleArrayListIterator<E> implements Iterator {
 
     /**
      * The array.
      */
-    private final E[] array;
+    @GuardedBy("this") private final E[] array;
 
     /**
      * The current index of the array.
      */
-    private int index = 0;
+    @GuardedBy("this")private int index = 0;
 
     /**
      * Sets the array with E type.
@@ -38,7 +42,7 @@ public class SimpleArrayListIterator<E> implements Iterator {
      * @return {@code true} if the iteration has more elements
      */
     @Override
-    public boolean hasNext() {
+    public synchronized boolean hasNext() {
         boolean result = true;
         try {
             if (this.array[index] == null) {
@@ -57,7 +61,7 @@ public class SimpleArrayListIterator<E> implements Iterator {
      * @throws NoSuchElementException if the iteration has no more elements
      */
     @Override
-    public E next() {
+    public synchronized E next() {
         Object result;
         try {
             result = this.array[index];

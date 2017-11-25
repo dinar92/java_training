@@ -1,5 +1,8 @@
 package ru.job4j.collections;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -8,22 +11,23 @@ import java.util.NoSuchElementException;
  * The implementation of the simple linked list.
  * @param <E> - the universal type.
  */
+@ThreadSafe
 public class SimpleLinkedList<E> implements Iterable<E> {
 
     /**
      * The link of the last item.
      */
-    private Node<E> last;
+    @GuardedBy("this") private Node<E> last;
 
     /**
      * The link of the first item.
      */
-    private Node<E> first;
+    @GuardedBy("this") private Node<E> first;
 
     /**
      * The counter of elements.
      */
-    private int counter = 0;
+    @GuardedBy("this") private int counter = 0;
 
     /**
      * Returns an iterator over elements of type {@code T}.
@@ -39,7 +43,7 @@ public class SimpleLinkedList<E> implements Iterable<E> {
      * Adds the new item to the linked list.
      * @param element - the new item.
      */
-    public void add(E element) {
+    public synchronized void add(E element) {
         if (this.first == null) {
             first = new Node<>(null, element, null);
             last = first;
@@ -56,7 +60,7 @@ public class SimpleLinkedList<E> implements Iterable<E> {
      * @return - the item.
      * @throws NoSuchElementException - if the item with that index is not exist.
      */
-    public E get(int index) {
+    public synchronized E get(int index) {
         if (counter == 0 || counter <= index) {
             throw new NoSuchElementException();
         }
