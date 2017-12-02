@@ -12,11 +12,11 @@ public class ThreadPoolTest {
      */
     @Test
     public void whenStartPoolThenStartWorksInThreads() {
-        ThreadPool pool = new ThreadPool(4, 4);
-        pool.addWork(new Work("a"));
-        pool.addWork(new Work("b"));
-        pool.addWork(new Work("c"));
-        pool.addWork(new Work("d"));
+        ThreadPool pool = new ThreadPool(4, 20);
+        char c = 'a';
+        for (int i = 0; i < 20; i++, c++) {
+            pool.addWork(new Work(Character.toString(c)));
+        }
         pool.setEnd();
     }
 
