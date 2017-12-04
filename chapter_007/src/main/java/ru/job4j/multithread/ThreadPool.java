@@ -22,16 +22,20 @@ public class ThreadPool {
     private volatile boolean isEnd = false;
 
     /**
-     * Sets the count of max count of threads and max count of possible works,
+     * Sets max count of possible works,
      * which will be processed in parallel;
      * starts threads.
-     * @param countOfThreads - the count of threads.
      * @param maxCountOfWorks - the max count of works.
      */
-    public ThreadPool(int countOfThreads, int maxCountOfWorks) {
+    public ThreadPool(int maxCountOfWorks) {
         this.worksQueue = new SimpleBlockingQueue<>(maxCountOfWorks);
+    }
 
-        for (int i = 0; i < countOfThreads; i++) {
+    /**
+     * Initializes the number of threads by the number of processors.
+     */
+    public void init() {
+        for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++) {
             this.listOfThreads.add(new Thread(new WorkThread()));
         }
 

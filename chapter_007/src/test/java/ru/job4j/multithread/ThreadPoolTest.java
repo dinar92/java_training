@@ -12,7 +12,8 @@ public class ThreadPoolTest {
      */
     @Test
     public void whenStartPoolThenStartWorksInThreads() {
-        ThreadPool pool = new ThreadPool(4, 20);
+        ThreadPool pool = new ThreadPool(20);
+        pool.init();
         char c = 'a';
         for (int i = 0; i < 20; i++, c++) {
             pool.addWork(new Work(Character.toString(c)));
