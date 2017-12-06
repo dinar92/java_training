@@ -14,7 +14,7 @@ public class SimpleLockTest {
      * The class that uses the SimpleLock.
      */
     public class Increment {
-        SimpleLock lock = new SimpleLock();
+        private final SimpleLock lock = new SimpleLock();
 
         public int i = 0;
 
@@ -33,7 +33,7 @@ public class SimpleLockTest {
      * The thread that changes the state of locked class (Increment).
      */
     public class Incrementer extends Thread {
-        Increment increment;
+        private final Increment increment;
 
         Incrementer(Increment increment) {
             this.increment = increment;
