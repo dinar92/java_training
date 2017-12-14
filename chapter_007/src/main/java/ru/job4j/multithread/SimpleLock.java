@@ -11,6 +11,11 @@ public class SimpleLock {
     private boolean isBlocked = false;
 
     /**
+     * The lock owner.
+     */
+    private Thread lockOwner;
+
+    /**
      * Locks the code for another threads.
      */
     public void lock() throws InterruptedException {
@@ -19,6 +24,7 @@ public class SimpleLock {
                     wait();
             }
             isBlocked = true;
+            this.lockOwner = Thread.currentThread();
         }
     }
 
@@ -27,8 +33,10 @@ public class SimpleLock {
      */
     public void unlock() {
         synchronized (this) {
-            isBlocked = false;
-            notify();
+            if (Thread.currentThread() == this.lockOwner) {
+                isBlocked = false;
+                notify();
+            }
         }
     }
 }
