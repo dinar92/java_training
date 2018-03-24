@@ -1,0 +1,11 @@
+CREATE TABLE transmission (
+id serial PRIMARY KEY,
+model VARCHAR(50) NOT NULL UNIQUE);
+
+CREATE TABLE engine (
+id serial PRIMARY KEY,
+model VARCHAR(50) NOT NULL UNIQUE);
+
+CREATE TABLE gear_box (
+id serial PRIMARY KEY,
+model VARCHAR(50) NOT NULL UNIQUE);
