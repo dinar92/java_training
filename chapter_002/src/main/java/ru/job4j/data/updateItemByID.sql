@@ -1,0 +1,1 @@
+UPDATE item SET name = ?, description = ?, createDate = ?, type = ? WHERE id = ?;

@@ -1,0 +1,1 @@
+INSERT INTO comment(authorName, createDate, commentText, itemId) VALUES (?, ?, ?, ?);
