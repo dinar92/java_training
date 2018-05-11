@@ -1,7 +1,9 @@
 package ru.job4j.view;
 
 import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -51,5 +53,22 @@ public class ConsoleInputTest {
         System.setIn(bais);
 
         assertThat(new ConsoleInput().ask(question, range), is("3"));
+    }
+
+    /**
+     * Tests ask(String question, ArrayList<E> array).
+     */
+    @Test
+    public void whenKeyInListRangeThenReturnsTrue() {
+        ByteArrayInputStream bais  = new ByteArrayInputStream(("test3\r" + ls).getBytes());
+        ArrayList<String> list = new ArrayList<>();
+        String question = "what did you say?";
+        list.add("test1");
+        list.add("test2");
+        list.add("test3");
+
+        System.setIn(bais);
+
+        assertThat(new ConsoleInput().ask(question, list), is("test3"));
     }
 }

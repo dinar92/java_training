@@ -1,6 +1,10 @@
 package ru.job4j.view;
 
+import ru.job4j.data.DBTracker;
 import ru.job4j.data.Tracker;
+
+import java.io.File;
+import java.sql.SQLException;
 
 /**The class starts console user interface.
 *@version 2.0
@@ -14,7 +18,7 @@ public class StartUI {
 	/**The database emulation.*/
 	private Tracker tracker;
 
-	/**The constructure sets method of interaction with the outside.
+	/**The constructor sets method of interaction with the outside.
 	*@param input - method of interaction with the outside
 	*@param tracker - database emulator*/
 	public StartUI(Input input, Tracker tracker) {
@@ -25,7 +29,11 @@ public class StartUI {
 	/**Program's start point.
 	*@param args - command line arguments*/
 	public static void main(String[] args) {
-		new StartUI(new ValidateMenuInput(), new Tracker()).init();
+		try {
+			new StartUI(new ValidateMenuInput(), new DBTracker(new File("src/main/resources/driver"), new File("src/main/resources/url"))).init();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**UI's start method.*/

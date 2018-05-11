@@ -84,7 +84,7 @@ public class ItemTest {
 	@Test
 	public void whenGenerateIdThenUniqueId() {
 		Item item = new Item();
-		String idOfFirstItem = "1";
+		String idOfFirstItem = "4";
 		item.generateId();
 		assertThat(item.getId(), is(idOfFirstItem));
 	}

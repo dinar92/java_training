@@ -59,7 +59,7 @@ public class Tracker {
 	*@return items - all items
 	*/
 	public ArrayList<Item> getAll() {
-		return (ArrayList<Item>) this.items.clone();
+		return new ArrayList<>(this.items);
 	}
 
 	/**Returns the array of ids of all items.

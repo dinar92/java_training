@@ -328,9 +328,11 @@ public class MenuTracker {
 		*@param tracker - the database emulation*/
 		public void execute(Input input, Tracker tracker) {
 			String answer = input.ask("Please, enter item's ID: ", tracker.getIds());
-			tracker.findById(answer).addComment(input.ask("Enter comment's text: "),
+			Item updated = tracker.findById(answer);
+			updated.addComment(input.ask("Enter comment's text: "),
 												input.ask("Enter comment's author: "),
 												System.currentTimeMillis());
+			tracker.update(updated);
 			System.out.println("Comment was added!");
 		}
 	}

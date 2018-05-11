@@ -39,55 +39,55 @@ public class DBTracker extends Tracker implements AutoCloseable {
     /**
      * The file with script, what initializes table with items.
      */
-    private final File initItemsDB = new File("src/main/java/ru/job4j/data/initItemsDB.sql");
+    private final File initItemsDB = new File("src/main/resources/initItemsDB.sql");
     /**
      * The file with script, what initializes table with commentaries.
      */
-    private final File initCommentsDB = new File("src/main/java/ru/job4j/data/initCommentsDB.sql");
+    private final File initCommentsDB = new File("src/main/resources/initCommentsDB.sql");
     /**
      * The file with script, what initializes table with types of items.
      */
-    private final File initItemType = new File("src/main/java/ru/job4j/data/initTypeDB.sql");
+    private final File initItemType = new File("src/main/resources/initTypeDB.sql");
     /**
      * The file with script, what inserts item in the table.
      */
-    private final File insertItemQuery = new File("src/main/java/ru/job4j/data/insertItem.sql");
+    private final File insertItemQuery = new File("src/main/resources/insertItem.sql");
     /**
      * The file with script, what inserts a commentary in the table.
      */
-    private final File insertCommentQuery = new File("src/main/java/ru/job4j/data/insertComment.sql");
+    private final File insertCommentQuery = new File("src/main/resources/insertComment.sql");
     /**
      * The file with script, what returns the item by ID.
      */
-    private final File getItemByIDQuery = new File("src/main/java/ru/job4j/data/getItemByID.sql");
+    private final File getItemByIDQuery = new File("src/main/resources/getItemByID.sql");
     /**
      * The file with script, what returns commentaries of the item.
      */
-    private final File getCommentsByItem = new File("src/main/java/ru/job4j/data/getCommentsByItem.sql");
+    private final File getCommentsByItem = new File("src/main/resources/getCommentsByItem.sql");
     /**
      * The file with script, what updates the item by ID.
      */
-    private final File updateItemByID = new File("src/main/java/ru/job4j/data/updateItemByID.sql");
+    private final File updateItemByID = new File("src/main/resources/updateItemByID.sql");
     /**
      * The file with script, what creates type "BUG" in types table.
      */
-    private final File insertBugType = new File("src/main/java/ru/job4j/data/insertBugType.sql");
+    private final File insertBugType = new File("src/main/resources/insertBugType.sql");
     /**
      * The file with script, what creates type "TASK" in types table.
      */
-    private final File insertTaskType = new File("src/main/java/ru/job4j/data/insertTaskType.sql");
+    private final File insertTaskType = new File("src/main/resources/insertTaskType.sql");
     /**
      * The file with script, what returns list of all IDs.
      */
-    private final File getAllID = new File("src/main/java/ru/job4j/data/getAllIDs.sql");
+    private final File getAllID = new File("src/main/resources/getAllIDs.sql");
     /**
      * The file with script, what returns items by specified name.
      */
-    private final File getItemsByName = new File("src/main/java/ru/job4j/data/getItemsByName.sql");
+    private final File getItemsByName = new File("src/main/resources/getItemsByName.sql");
     /**
      * The file with script, what removes the items.
      */
-    private final File deleteItem = new File("src/main/java/ru/job4j/data/deleteItem.sql");
+    private final File deleteItem = new File("src/main/resources/deleteItem.sql");
 
     private final Connection connection;
 

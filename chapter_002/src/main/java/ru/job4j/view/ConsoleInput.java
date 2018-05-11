@@ -68,7 +68,7 @@ public class ConsoleInput implements Input {
         boolean exist = false;
         String key = this.ask(question);
         for (String item : array) {
-            if (item.equals(key)) {
+            if (item.equals(key) || "exit".equalsIgnoreCase(key)) {
                 exist = true;
                 break;
             }
@@ -94,7 +94,7 @@ public class ConsoleInput implements Input {
         boolean exist = false;
         String key = this.ask(question);
         for (E item : array) {
-            if (item.toString().equals(key)) {
+            if (item.toString().equals(key) || "exit".equalsIgnoreCase(key)) {
                 exist = true;
                 break;
             }
