@@ -27,15 +27,15 @@ public class DBAccess implements AutoCloseable {
     private Resource resource = new Resource();
 
     /**
-     * Sets the connection to the database by "dbDriver" and "dbURL" files.
+     * Sets the connection to the database by "driver" and "url" files.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * @throws IOException            - If an I/O error occurs.
+     * @throws ClassNotFoundException - Thr driver not found.
+     * @throws SQLException           - if a database access error occurs or the url is null.
      */
     public DBAccess() throws IOException, ClassNotFoundException, SQLException {
-        Class.forName(resource.content("conf/db/dbDriver"));
-        connection = DriverManager.getConnection(resource.content("conf/db/dbURL"));
+        Class.forName(resource.content("jdbc/driver"));
+        connection = DriverManager.getConnection(resource.content("jdbc/url"));
     }
 
     /**
@@ -61,8 +61,8 @@ public class DBAccess implements AutoCloseable {
      */
     public Offer getLast() throws SQLException, IOException {
         Offer lastOffer = null;
-        try (Statement statement = connection.createStatement()) {
-            ResultSet result = statement.executeQuery(resource.content("scripts/getLastOffer.sql"));
+        try (Statement statement = connection.createStatement();
+             ResultSet result = statement.executeQuery(resource.content("scripts/getLastOffer.sql"))) {
             while (result.next()) {
                 lastOffer = new Offer();
                 lastOffer.setAuthor(result.getString("author"));
@@ -133,14 +133,15 @@ public class DBAccess implements AutoCloseable {
         boolean result = false;
         try (PreparedStatement statement = connection.prepareStatement(resource.content("scripts/checkDuplicate.sql"))) {
             statement.setString(1, offer.getContent());
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                if (resultSet.getInt(1) != 0) {
-                    result = true;
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    if (resultSet.getInt(1) != 0) {
+                        result = true;
+                    }
                 }
+                return result;
             }
         }
-        return result;
     }
 
     /**

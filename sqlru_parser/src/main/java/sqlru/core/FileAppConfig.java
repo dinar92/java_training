@@ -39,52 +39,35 @@ public class FileAppConfig implements AppConfig {
         if (this.properties.isEmpty()) {
             throw new IOException("The configuration file is not load");
         }
-        StringBuilder expression = new StringBuilder();
-        String separator = " ";
-        if (properties.getProperty("EVERY_SECOND").equalsIgnoreCase("true")) {
-            expression.append("* * * * * ? *");
-        } else if (properties.getProperty("EVERY_MINUTE").equalsIgnoreCase("true")) {
-            expression.append(properties.getProperty("FIRE_SECOND"))
-                    .append(separator)
-                    .append("* * * * ? *");
+        String expression;
+        if (properties.getProperty("EVERY_MINUTE").equalsIgnoreCase("true")) {
+            expression = String.format("%s * * * * ? *",
+                    properties.getProperty("FIRE_SECOND"));
         } else if (properties.getProperty("EVERY_HOUR").equalsIgnoreCase("true")) {
-            expression.append(properties.getProperty("FIRE_SECOND"))
-                    .append(separator)
-                    .append(properties.getProperty("FIRE_MINUTE"))
-                    .append(separator)
-                    .append("* * * ? *");
+            expression = String.format("%s %s * * * ? *",
+                    properties.getProperty("FIRE_SECOND"),
+                    properties.getProperty("FIRE_MINUTE"));
         } else if (properties.getProperty("EVERY_DAY").equalsIgnoreCase("true")) {
-            expression.append(properties.getProperty("FIRE_SECOND"))
-                    .append(separator)
-                    .append(properties.getProperty("FIRE_MINUTE"))
-                    .append(separator)
-                    .append(properties.getProperty("FIRE_HOUR"))
-                    .append(separator)
-                    .append("* * ? *");
+            expression = String.format("%s %s %s * * ? *",
+                    properties.getProperty("FIRE_SECOND"),
+                    properties.getProperty("FIRE_MINUTE"),
+                    properties.getProperty("FIRE_HOUR"));
         } else if (properties.getProperty("EVERY_MONTH").equalsIgnoreCase("true")) {
-            expression.append(properties.getProperty("FIRE_SECOND"))
-                    .append(separator)
-                    .append(properties.getProperty("FIRE_MINUTE"))
-                    .append(separator)
-                    .append(properties.getProperty("FIRE_HOUR"))
-                    .append(separator)
-                    .append(properties.getProperty("FIRE_DAY_OF_MONTH"))
-                    .append(separator)
-                    .append("* ? *");
+            expression = String.format("%s %s %s %s * ? *",
+                    properties.getProperty("FIRE_SECOND"),
+                    properties.getProperty("FIRE_MINUTE"),
+                    properties.getProperty("FIRE_HOUR"),
+                    properties.getProperty("FIRE_DAY_OF_MONTH"));
         } else if (properties.getProperty("EVERY_WEEK").equalsIgnoreCase("true")) {
-            expression.append(properties.getProperty("FIRE_SECOND"))
-                    .append(separator)
-                    .append(properties.getProperty("FIRE_MINUTE"))
-                    .append(separator)
-                    .append(properties.getProperty("FIRE_HOUR"))
-                    .append(separator)
-                    .append("? *")
-                    .append(separator)
-                    .append(properties.getProperty("FIRE_DAY_OF_WEEK"))
-                    .append(separator)
-                    .append("*");
+            expression = String.format("%s %s %s ? * %s *",
+                    properties.getProperty("FIRE_SECOND"),
+                    properties.getProperty("FIRE_MINUTE"),
+                    properties.getProperty("FIRE_HOUR"),
+                    properties.getProperty("FIRE_DAY_OF_WEEK"));
+        } else {
+            expression = "* * * * * ? *";
         }
-        return expression.toString();
+        return expression;
     }
 
     /**
