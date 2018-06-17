@@ -1,0 +1,1 @@
+SELECT * FROM job_offer WHERE isLast = 1;
