@@ -1,1 +1,0 @@
-UPDATE job_offer SET isLast = 0 WHERE isLast = 1;

@@ -1,1 +1,0 @@
-SELECT * FROM job_offer ORDER BY post_timedate;

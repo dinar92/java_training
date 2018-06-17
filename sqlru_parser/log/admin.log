@@ -1,0 +1,4 @@
+12-06-2018 17:01:30 DEBUG TouchCollector:106 - =================== START OF REPORT ======================== 
+12-06-2018 17:01:30 DEBUG TouchCollector:108 - Report: sqlru.core.DateTimeExtractor
+12-06-2018 17:01:30 DEBUG TouchCollector:183 - source: DateTimeExtractor.java
+12-06-2018 17:01:30 DEBUG TouchCollector:112 - ===================  END OF REPORT  ======================== 
