@@ -12,7 +12,7 @@ public class ValidateService implements Validate {
     /**
      * A thread-safe instance of validator.
      */
-    private static Validate validate = new ValidateService();
+    private static final Validate validate = new ValidateService();
 
     /**
      * The store of users.
@@ -112,7 +112,7 @@ public class ValidateService implements Validate {
     private boolean hasAccess(final Integer id) throws NullPointerException, NoSuchElementException {
         if (id == null) {
             throw new NullPointerException("ID must not be null");
-        } else if (store.findAll().stream().noneMatch(entry -> entry.getId() == (id))) {
+        } else if (store.findById(id) == null) {
             throw new NoSuchElementException("User with such ID not found");
         }
         return true;

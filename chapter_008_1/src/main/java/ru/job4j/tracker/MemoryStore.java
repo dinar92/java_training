@@ -17,7 +17,7 @@ public class MemoryStore implements Store {
     /**
      * A singleton instance of the store.
      */
-    private static Store store = new MemoryStore();
+    private static final Store store = new MemoryStore();
 
     /**
      * A thread-safe storage of users.
@@ -94,6 +94,7 @@ public class MemoryStore implements Store {
                 this.list) {
             if (user.getId() == id) {
                 found = user;
+                break;
             }
         }
         return found;
