@@ -7,7 +7,7 @@
         version="2.4">
     <servlet>
         <servlet-name>UsersServlet</servlet-name>
-        <servlet-class>ru.job4j.tracker.UsersServlet</servlet-class>
+        <jsp-file>/list.jsp</jsp-file>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -16,7 +16,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>UserUpdateServlet</servlet-name>
-        <servlet-class>ru.job4j.tracker.UserUpdateServlet</servlet-class>
+        <jsp-file>/userUpdate.jsp</jsp-file>
         <load-on-startup>4</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -25,7 +25,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>UserCreateServlet</servlet-name>
-        <servlet-class>ru.job4j.tracker.UserCreateServlet</servlet-class>
+        <jsp-file>/userCreate.jsp</jsp-file>
         <load-on-startup>3</load-on-startup>
     </servlet>
     <servlet-mapping>
