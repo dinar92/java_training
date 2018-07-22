@@ -39,7 +39,8 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        try (PrintWriter writer = new PrintWriter(resp.getOutputStream())) {
+        PrintWriter writer = resp.getWriter();
+        try {
             for (User user : this.validate.findAll()) {
                 writer.println(user.toString());
             }
@@ -70,7 +71,7 @@ public class UserServlet extends HttpServlet {
         this.dispatch.init();
         Action action = Action.valueOf(req.getParameter("action").toUpperCase());
         this.dispatch.identify(action, req);
-        doGet(req, resp);
+        resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 
     /**
@@ -88,7 +89,7 @@ public class UserServlet extends HttpServlet {
                     newUser.setEmail(request.getParameter("email"));
                     newUser.setLogin(request.getParameter("login"));
                     newUser.setId(Integer.parseInt(request.getParameter("id")));
-                    newUser.setCreateDate(LocalDate.parse(request.getParameter("create_date")));
+                    newUser.setCreateDate(LocalDate.parse(request.getParameter("createDate")));
                     validate.add(newUser);
                 } catch (Exception e) {
                     logger.error(e.getMessage(), e);
@@ -104,7 +105,7 @@ public class UserServlet extends HttpServlet {
                     newUser.setEmail(request.getParameter("email"));
                     newUser.setLogin(request.getParameter("login"));
                     newUser.setId(Integer.parseInt(request.getParameter("id")));
-                    newUser.setCreateDate(LocalDate.parse(request.getParameter("create_date")));
+                    newUser.setCreateDate(LocalDate.parse(request.getParameter("createDate")));
                     validate.update(newUser);
                 } catch (Exception e) {
                     logger.error(e.getMessage(), e);
