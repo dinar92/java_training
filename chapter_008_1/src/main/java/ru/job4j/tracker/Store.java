@@ -7,41 +7,41 @@ import java.util.Set;
 /**
  * A store of users.
  */
-public interface Store {
+public interface Store<E> {
 
     /**
-     * Adds the user to store.
+     * Adds an element to store.
      *
-     * @param user - a new user.
+     * @param e - a new element.
      */
-    void add(User user);
+    void add(E e);
 
     /**
-     * Updates user's data by ID.
+     * Updates element's data by ID.
      *
-     * @param user - an updated user.
+     * @param e - an updated element.
      */
-    void update(User user);
+    void update(E e);
 
     /**
-     * Removes the user from store by ID.
+     * Removes the element from store by ID.
      *
-     * @param id - user's ID.
+     * @param id - element's ID.
      */
     void delete(Integer id);
 
     /**
-     * Returns List of users.
+     * Returns List of elements.
      *
-     * @return - a list of users.
+     * @return - a list of elements.
      */
-    List<User> findAll();
+    List<E> findAll();
 
     /**
-     * Looks for a user from the repository by ID.
+     * Looks for a element from the repository by ID.
      *
-     * @param id -ID.
-     * @return- the user found.
+     * @param id - ID.
+     * @return - the element found.
      */
-    User findById(Integer id);
+    E findById(Integer id);
 }

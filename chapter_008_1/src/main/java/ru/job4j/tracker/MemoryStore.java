@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * A store of users.
  * A thread-safe singleton.
  */
-public class MemoryStore implements Store {
+public class MemoryStore implements Store<User> {
 
     /**
      * A singleton instance of the store.

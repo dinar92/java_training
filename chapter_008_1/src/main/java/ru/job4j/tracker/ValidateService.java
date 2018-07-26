@@ -7,7 +7,7 @@ import java.util.function.Consumer;
  * Validation service wrapper for MemoryStore.
  * The thread-safe singleton.
  */
-public class ValidateService implements Validate {
+public class ValidateService implements Validate<User> {
 
     /**
      * A thread-safe instance of validator.
@@ -98,7 +98,7 @@ public class ValidateService implements Validate {
      */
     @Override
     public User findById(Integer id) {
-        return (hasAccess(id)) ? this.store.findById(id) : null;
+        return (hasAccess(id)) ? (User) this.store.findById(id) : null;
     }
 
     /**
