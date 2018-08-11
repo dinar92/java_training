@@ -1,0 +1,1 @@
+INSERT INTO user_db (id, name, login, email, create_date) VALUES (?, ?, ?, ?, ?);
