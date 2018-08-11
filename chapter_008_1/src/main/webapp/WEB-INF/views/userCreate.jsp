@@ -1,11 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
 <head> 
     <title>Create new user</title> 
     </head> 
 <body> 
 <h1>Create new user</h1> 
-<form action='<%=request.getContextPath()%>/' method='post'>
+<form action='${pageContext.servletContext.contextPath}/action' method='post'>
     <input type='hidden' name='action' value='add' /> 
     ID:<br /> 
     <input type='text' name='id' /><br /><br /> 

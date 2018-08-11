@@ -22,35 +22,6 @@ public class UserServlet extends HttpServlet {
     private final ActionDispatchPattern dispatch = new ActionDispatchPattern();
 
     /**
-     * Responses list of users.
-     *
-     * @param req  an object that
-     *             contains the request the client has made
-     *             of the servlet
-     * @param resp an object that
-     *             contains the response the servlet sends
-     *             to the client
-     * @throws IOException      if an input or output error is
-     *                          detected when the servlet handles
-     *                          the GET request
-     * @throws ServletException if the request for the GET
-     *                          could not be handled
-     */
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        PrintWriter writer = resp.getWriter();
-        try {
-            for (User user : this.validate.findAll()) {
-                writer.println(user.toString());
-            }
-            writer.flush();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    /**
      * Updates the data of users storage.
      *
      * @param req  an object that
@@ -71,7 +42,7 @@ public class UserServlet extends HttpServlet {
         this.dispatch.init();
         Action action = Action.valueOf(req.getParameter("action").toUpperCase());
         this.dispatch.identify(action, req);
-        resp.sendRedirect(String.format("%s/list", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 
     /**

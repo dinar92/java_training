@@ -6,17 +6,17 @@
         http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
         version="2.4">
     <servlet>
-        <servlet-name>UsersServlet</servlet-name>
-        <jsp-file>/list.jsp</jsp-file>
-        <load-on-startup>2</load-on-startup>
+        <servlet-name>Users list</servlet-name>
+        <servlet-class>ru.job4j.tracker.UsersServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UsersServlet</servlet-name>
-        <url-pattern>/list</url-pattern>
+        <servlet-name>Users list</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>UserUpdateServlet</servlet-name>
-        <jsp-file>/userUpdate.jsp</jsp-file>
+        <jsp-file>/WEB-INF/views/userUpdate.jsp</jsp-file>
         <load-on-startup>4</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -25,7 +25,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>UserCreateServlet</servlet-name>
-        <jsp-file>/userCreate.jsp</jsp-file>
+        <jsp-file>/WEB-INF/views/userCreate.jsp</jsp-file>
         <load-on-startup>3</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -33,12 +33,12 @@
         <url-pattern>/create</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>UserServlet</servlet-name>
+        <servlet-name>User Controller</servlet-name>
         <servlet-class>ru.job4j.tracker.UserServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UserServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <servlet-name>User Controller</servlet-name>
+        <url-pattern>/action</url-pattern>
     </servlet-mapping>
 </web-app>
