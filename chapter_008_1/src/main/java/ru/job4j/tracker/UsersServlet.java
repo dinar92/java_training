@@ -23,7 +23,7 @@ public class UsersServlet extends HttpServlet {
     /**
      * A store of users.
      */
-    private final Validate userStore = ValidateService.getInstance();
+    private final Validate<User> userStore = ValidateService.getInstance();
 
     /**
      * Creates a table with users.

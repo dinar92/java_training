@@ -23,7 +23,7 @@ public class UserUpdateServlet extends HttpServlet {
     /**
      * A store of users.
      */
-    private final Validate store = ValidateService.getInstance();
+    private final Validate<User> store = ValidateService.getInstance();
 
     /**
      * Creates a page with a form for update user's data.

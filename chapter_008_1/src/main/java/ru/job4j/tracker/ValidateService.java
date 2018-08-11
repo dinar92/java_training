@@ -17,7 +17,7 @@ public class ValidateService implements Validate<User> {
     /**
      * The store of users.
      */
-    private Store store = MemoryStore.getInstance();
+    private Store<User> store = DbStore.getInstance();
 
     private ValidateService() {
     }

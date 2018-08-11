@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 public class UserServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServlet.class);
-    private final Validate validate = ValidateService.getInstance();
+    private final Validate<User> validate = ValidateService.getInstance();
     private final ActionDispatchPattern dispatch = new ActionDispatchPattern();
 
     /**
