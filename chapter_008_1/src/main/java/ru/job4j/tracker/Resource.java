@@ -19,12 +19,13 @@ public class Resource {
      */
     public String content(String fileName) throws IOException {
         StringBuilder script = new StringBuilder();
-        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            script.append(line);
+        try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                script.append(line);
+            }
+            return script.toString();
         }
-        return script.toString();
     }
 }
