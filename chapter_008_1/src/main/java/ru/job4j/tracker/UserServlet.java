@@ -3,11 +3,13 @@ package ru.job4j.tracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
@@ -15,11 +17,36 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * Handler of add, update and delete requests from the client.
+ */
 public class UserServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServlet.class);
     private final Validate<User> validate = ValidateService.getInstance();
     private final ActionDispatchPattern dispatch = new ActionDispatchPattern();
+
+    /**
+     * Shows a main page with table with users and any additional options for admins.
+     *
+     * @param req  - a GET request from user.
+     * @param resp - a response for user.
+     * @throws ServletException - can throw when servlet encounters difficulty.
+     * @throws IOException      - signals that an I/O exception of some sort has occurred.
+     */
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
+        String mainPage = null;
+        HttpSession session = req.getSession();
+        if ("admin".equals(session.getAttribute("role"))) {
+            mainPage = "/WEB-INF/views/admin/index.jsp";
+        } else {
+            mainPage = "/WEB-INF/views/index.jsp";
+        }
+        RequestDispatcher dispatcher = req.getRequestDispatcher(mainPage);
+        dispatcher.forward(req, resp);
+    }
 
     /**
      * Updates the data of users storage.
@@ -38,11 +65,11 @@ public class UserServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Action action = Action.valueOf(req.getParameter("action").toUpperCase());
         resp.setContentType("text/html");
         this.dispatch.init();
-        Action action = Action.valueOf(req.getParameter("action").toUpperCase());
         this.dispatch.identify(action, req);
-        resp.sendRedirect(String.format("%s/", req.getContextPath()));
+        this.doGet(req, resp);
     }
 
     /**
@@ -59,8 +86,13 @@ public class UserServlet extends HttpServlet {
                     newUser.setName(request.getParameter("name"));
                     newUser.setEmail(request.getParameter("email"));
                     newUser.setLogin(request.getParameter("login"));
+                    newUser.setPassword(request.getParameter("password"));
                     newUser.setId(Integer.parseInt(request.getParameter("id")));
                     newUser.setCreateDate(LocalDate.parse(request.getParameter("createDate")));
+                    Integer roleID = Integer.valueOf(request.getParameter("role"));
+                    Validate<Role> store = RoleValidateService.getInstance();
+                    Role role = store.findById(roleID);
+                    newUser.setRole(role);
                     validate.add(newUser);
                 } catch (Exception e) {
                     logger.error(e.getMessage(), e);
@@ -75,8 +107,13 @@ public class UserServlet extends HttpServlet {
                     newUser.setName(request.getParameter("name"));
                     newUser.setEmail(request.getParameter("email"));
                     newUser.setLogin(request.getParameter("login"));
+                    newUser.setPassword(request.getParameter("password"));
                     newUser.setId(Integer.parseInt(request.getParameter("id")));
                     newUser.setCreateDate(LocalDate.parse(request.getParameter("createDate")));
+                    Integer roleID = Integer.valueOf(request.getParameter("role"));
+                    Validate<Role> store = RoleValidateService.getInstance();
+                    Role role = store.findById(roleID);
+                    newUser.setRole(role);
                     validate.update(newUser);
                 } catch (Exception e) {
                     logger.error(e.getMessage(), e);

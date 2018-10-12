@@ -1,23 +1,34 @@
 package ru.job4j.tracker;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
-import java.util.function.Consumer;
 
 /**
  * Validation service wrapper for MemoryStore.
  * The thread-safe singleton.
  */
-public class ValidateService implements Validate<User> {
+public class ValidateService implements Credential<String, String>, Validate<User> {
 
     /**
      * A thread-safe instance of validator.
      */
-    private static final Validate validate = new ValidateService();
+    private static final ValidateService SERVICE = new ValidateService();
 
     /**
      * The store of users.
      */
     private Store<User> store = DbStore.getInstance();
+
+    /**
+     * A connection pool to the database.
+     */
+    private BasicDataSource dataSource = new DatabaseSource();
 
     private ValidateService() {
     }
@@ -27,25 +38,8 @@ public class ValidateService implements Validate<User> {
      *
      * @return - the validator.
      */
-    public static Validate getInstance() {
-        return validate;
-    }
-
-    /**
-     * Adds the user to store.
-     *
-     * @param user - a new user.
-     * @throws NullPointerException     - if user's value is null.
-     * @throws IllegalArgumentException - if specified user already exists.
-     */
-    @Override
-    public void add(User user) throws NullPointerException, IllegalArgumentException {
-        if (user == null) {
-            throw new NullPointerException("Null values not support");
-        } else if (this.store.findById(user.getId()) != null) {
-            throw new IllegalArgumentException("User with this ID already exists");
-        }
-        this.store.add(user);
+    public static ValidateService getInstance() {
+        return SERVICE;
     }
 
     /**
@@ -57,12 +51,26 @@ public class ValidateService implements Validate<User> {
      */
     @Override
     public void update(User user) throws NoSuchElementException, NullPointerException {
-        if (user == null) {
-            throw new NullPointerException();
+        if (!hasAccess(user) || this.store.findById(user.getId()) == null) {
+            throw new NoSuchElementException("User with such ID not found");
         }
-        if (hasAccess(user.getId())) {
-            this.store.update(user);
+        this.store.update(user);
+    }
+
+    /**
+     * Adds the user to store. If this user doesn't has access or
+     * user already contains in the store, then throws exception.
+     *
+     * @param user - a new user.
+     * @throws NullPointerException     - if user's value is null.
+     * @throws IllegalArgumentException - if specified user already exists.
+     */
+    @Override
+    public void add(User user) throws NullPointerException, IllegalArgumentException {
+        if (!this.hasAccess(user) || this.store.findById(user.getId()) != null) {
+            throw new IllegalArgumentException("User with this ID already exists");
         }
+        this.store.add(user);
     }
 
     /**
@@ -70,13 +78,16 @@ public class ValidateService implements Validate<User> {
      *
      * @param id - user's ID.
      * @throws NullPointerException   - if ID is null.
-     * @throws NoSuchElementException - a user with such ID not found
+     * @throws NoSuchElementException - a user with such ID not found.
      */
     @Override
     public void delete(Integer id) throws NoSuchElementException, NullPointerException {
-        if (hasAccess(id)) {
-            this.store.delete(id);
+        if (id == null) {
+            throw new NullPointerException("ID is null");
+        } else if (this.store.findById(id) == null) {
+            throw new NoSuchElementException("User with such ID not found");
         }
+        this.store.delete(id);
     }
 
     /**
@@ -94,27 +105,60 @@ public class ValidateService implements Validate<User> {
      *
      * @param id -ID.
      * @return - the user found, null if not found.
-     * @throws Exception - validation error.
      */
     @Override
     public User findById(Integer id) {
-        return (hasAccess(id)) ? (User) this.store.findById(id) : null;
+        User user = null;
+        if (id != null) {
+            user = this.store.findById(id);
+        }
+        return user;
     }
 
     /**
      * Validates user's ID.
      *
-     * @param id - ID.
+     * @param user - a verifiable user.
      * @return - true if ID is correct, throws exception - otherwise.
-     * @throws NullPointerException   - if ID is null.
-     * @throws NoSuchElementException - a user with such ID not found.
+     * @throws NullPointerException - if ID is null.
      */
-    private boolean hasAccess(final Integer id) throws NullPointerException, NoSuchElementException {
-        if (id == null) {
-            throw new NullPointerException("ID must not be null");
-        } else if (store.findById(id) == null) {
-            throw new NoSuchElementException("User with such ID not found");
+    private boolean hasAccess(User user) throws NullPointerException {
+        if (user == null) {
+            throw new NullPointerException("User must not be null");
+        } else if (user.getPassword() == null ||
+                user.getLogin() == null ||
+                user.getName() == null ||
+                user.getCreateDate() == null ||
+                user.getEmail() == null ||
+                user.getRole() == null) {
+            throw new NullPointerException("User's fields must be contain the values");
         }
         return true;
+    }
+
+    /**
+     * Verifies that the user is in a system.
+     *
+     * @param login    - a login.
+     * @param password - a password.
+     * @return - true - if user is in system, false - otherwise or if one of parameters is null.
+     */
+    @Override
+    public boolean isCredential(String login, String password) throws SQLException, IOException {
+        boolean isCredential = false;
+        String script = new Resource().content("database/scripts/user_authentication.sql");
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(script)) {
+            statement.setString(1, login);
+            statement.setString(2, password);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    if (resultSet.getInt("credential") == 1) {
+                        isCredential = true;
+                    }
+                }
+            }
+        }
+        return isCredential;
     }
 }

@@ -17,11 +17,20 @@
     <input type='text' name='name' value='${user.name}'/><br/><br/>
     Login:<br/>
     <input type='text' name='login' value='${user.login}'/><br/><br/>
+    Password:<br/>
+    <input type='password' name='password' value="${user.password}"/><br/><br/>
     Email:<br/>
     <input type='email' name='email' value='${user.email}'/><br/><br/>
     Create date:<br/>
     <input type='date' name='createDate' value='${user.createDate}'/><br/><br/>
+    Role:<br/>
+    <input type='text' name='role' value='${user.role.id}' readonly/><br/><br/>
     <input type='submit' value='EDIT'/>
+</form>
+<br/>
+<br/>
+<form action="${pageContext.servletContext.contextPath}/" method="get">
+    <input type="submit" value="To main page" />
 </form>
 </body>
 </html>

@@ -5,9 +5,68 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
         http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
         version="2.4">
+
+    <!-- Listeners -->
+    <listener>
+        <listener-class>ru.job4j.tracker.listener.DBInitListener</listener-class>
+    </listener>
+
+    <!-- Filters -->
+    <filter>
+        <filter-name>Authentication filter</filter-name>
+        <filter-class>ru.job4j.tracker.filter.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Authentication filter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>Admin filter</filter-name>
+        <filter-class>ru.job4j.tracker.filter.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Admin filter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
+    <!-- Admin zone -->
+    <servlet>
+        <servlet-name>Admin main</servlet-name>
+        <jsp-file>/WEB-INF/views/admin/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Admin main</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AdminUserUpdateServlet</servlet-name>
+        <jsp-file>/WEB-INF/views/userUpdate.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminUserUpdateServlet</servlet-name>
+        <url-pattern>/admin/edit</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserCreateServlet</servlet-name>
+        <jsp-file>/WEB-INF/views/admin/userCreate.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserCreateServlet</servlet-name>
+        <url-pattern>/admin/create</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RoleCreateServlet</servlet-name>
+        <servlet-class>ru.job4j.tracker.RoleCreateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RoleCreateServlet</servlet-name>
+        <url-pattern>/admin/roleCreate</url-pattern>
+    </servlet-mapping>
+
+    <!-- User zone -->
     <servlet>
         <servlet-name>Users list</servlet-name>
-        <servlet-class>ru.job4j.tracker.UsersServlet</servlet-class>
+        <servlet-class>ru.job4j.tracker.UserServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -16,29 +75,58 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>UserUpdateServlet</servlet-name>
-        <jsp-file>/WEB-INF/views/userUpdate.jsp</jsp-file>
-        <load-on-startup>4</load-on-startup>
+        <servlet-class>ru.job4j.tracker.UserUpdateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserUpdateServlet</servlet-name>
         <url-pattern>/edit</url-pattern>
     </servlet-mapping>
+
+    <!-- Authorization -->
     <servlet>
-        <servlet-name>UserCreateServlet</servlet-name>
-        <jsp-file>/WEB-INF/views/userCreate.jsp</jsp-file>
-        <load-on-startup>3</load-on-startup>
+        <servlet-name>Authentication</servlet-name>
+        <servlet-class>ru.job4j.tracker.AuthenticationController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UserCreateServlet</servlet-name>
-        <url-pattern>/create</url-pattern>
+        <servlet-name>Authentication</servlet-name>
+        <url-pattern>/signin</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Signout</servlet-name>
+        <servlet-class>ru.job4j.tracker.SignoutController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Signout</servlet-name>
+        <url-pattern>/signout</url-pattern>
+    </servlet-mapping>
+
+    <!-- Actions handler -->
     <servlet>
         <servlet-name>User Controller</servlet-name>
         <servlet-class>ru.job4j.tracker.UserServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>User Controller</servlet-name>
         <url-pattern>/action</url-pattern>
     </servlet-mapping>
+
+    <!-- Errors handler -->
+    <servlet>
+        <servlet-name>ErrorHandler</servlet-name>
+        <servlet-class>ru.job4j.tracker.error.ErrorHandler</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ErrorHandler</servlet-name>
+        <url-pattern>/ErrorHandler</url-pattern>
+    </servlet-mapping>
+
+    <!-- HTTP errors -->
+    <error-page>
+        <error-code>403</error-code>
+        <location>/ErrorHandler</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/ErrorHandler</location>
+    </error-page>
 </web-app>

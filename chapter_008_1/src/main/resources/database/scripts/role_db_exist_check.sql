@@ -1,0 +1,1 @@
+SELECT count(*) FROM pg_tables WHERE tablename='role' AND schemaname='public';

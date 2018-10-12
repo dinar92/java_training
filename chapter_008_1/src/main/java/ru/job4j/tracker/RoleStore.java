@@ -7,15 +7,14 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 /**
- * A database store implementation.
+ * The storage of roles.
  */
-public class DbStore implements Store<User> {
+public class RoleStore implements Store<Role> {
 
     /**
      * A connection pool of a database.
@@ -25,17 +24,12 @@ public class DbStore implements Store<User> {
     /**
      * An instance of the current database.
      */
-    private static final DbStore INSTANCE = new DbStore();
-    
+    private static final RoleStore INSTANCE = new RoleStore();
+
     /**
      * A resource files reader.
      */
     private static Resource RESOURCE = new Resource();
-
-    /**
-     * A roles store.
-     */
-    private static final Validate<Role> roleStore = RoleValidateService.getInstance();
 
     /**
      * An instance of logger.
@@ -45,17 +39,18 @@ public class DbStore implements Store<User> {
     /**
      * Sets properties of database.
      */
-    private DbStore() {
+    private RoleStore() {
     }
 
     /**
      * Checks existing of a table in database. Uses a specified script.
+     *
      * @return - true - if exist, false - otherwise.
-     * @throws IOException - If an I/O error occurs.
+     * @throws IOException  - If an I/O error occurs.
      * @throws SQLException - if a database access error occurs.
      */
     private static boolean isTableExist() throws IOException, SQLException {
-        String pathToScript = "database/scripts/database_exist_check.sql";
+        String pathToScript = "database/scripts/role_db_exist_check.sql";
         String query = RESOURCE.content(pathToScript);
         boolean tableExist = false;
         try (Connection connection = SOURCE.getConnection();
@@ -72,11 +67,12 @@ public class DbStore implements Store<User> {
 
     /**
      * Initializes a table in the database.
-     * @throws IOException - If an I/O error occurs.
+     *
+     * @throws IOException  - If an I/O error occurs.
      * @throws SQLException - if a database access error occurs.
      */
     private static void initTable() throws SQLException, IOException {
-        String pathToScript = "database/scripts/user_db_init.sql";
+        String pathToScript = "database/scripts/role_db_init.sql";
         try (Connection connection = SOURCE.getConnection();
              Statement statement = connection.createStatement()) {
             statement.executeUpdate(RESOURCE.content(pathToScript));
@@ -85,6 +81,7 @@ public class DbStore implements Store<User> {
 
     /**
      * Gets an instance of a database user store.
+     *
      * @return - an instance.
      */
     public static Store getInstance() {
@@ -99,150 +96,127 @@ public class DbStore implements Store<User> {
     }
 
     /**
-     * Adds a new user to the database store.
-     * @param user - a new user.
+     * Adds new role to database.
+     *
+     * @param role - new Role.
      */
     @Override
-    public void add(User user) {
-        String pathToScript = "database/scripts/add_user.sql";
-
+    public void add(Role role) {
+        String pathToScript = "database/scripts/role_add.sql";
         try (Connection connection = SOURCE.getConnection()) {
             connection.setAutoCommit(false);
             try (PreparedStatement statement = connection.prepareStatement(RESOURCE.content(pathToScript))) {
-                statement.setInt(1, user.getId());
-                statement.setString(2, user.getName());
-                statement.setString(3, user.getLogin());
-                statement.setString(4, user.getEmail());
-                statement.setDate(5, Date.valueOf(user.getCreateDate()));
-                statement.setString(6, user.getPassword());
-                statement.setInt(7, user.getRole().getId());
+                statement.setInt(1, role.getId());
+                statement.setString(2, role.getName());
                 statement.executeUpdate();
+                connection.commit();
             } catch (IOException e) {
                 connection.rollback();
-                connection.setAutoCommit(true);
                 LOGGER.error(e.getMessage(), e);
+            } finally {
+                connection.setAutoCommit(true);
             }
-            connection.commit();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
     }
 
     /**
-     * Updates an existing user by ID.
-     * @param user - an updated user.
+     * Updates existing role by ID.
+     *
+     * @param role - updated role.
      */
     @Override
-    public void update(User user) {
-        String pathToScript = "database/scripts/update_user.sql";
-
+    public void update(Role role) {
+        String pathToScript = "database/scripts/role_update.sql";
         try (Connection connection = SOURCE.getConnection()) {
             connection.setAutoCommit(false);
             try (PreparedStatement statement = connection.prepareStatement(RESOURCE.content(pathToScript))) {
-                statement.setString(1, user.getName());
-                statement.setString(2, user.getLogin());
-                statement.setString(3, user.getEmail());
-                statement.setDate(4, Date.valueOf(user.getCreateDate()));
-                statement.setString(5, user.getPassword());
-                statement.setInt(6, user.getRole().getId());
-                statement.setInt(7, user.getId());
+                statement.setString(1, role.getName());
+                statement.setInt(2, role.getId());
                 statement.executeUpdate();
+                connection.commit();
             } catch (IOException e) {
                 connection.rollback();
-                connection.setAutoCommit(true);
                 LOGGER.error(e.getMessage(), e);
+            } finally {
+                connection.setAutoCommit(true);
             }
-            connection.commit();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
     }
 
     /**
-     * Removes an user from the database by ID.
-     * @param id - user's ID.
+     * Deletes a role from dattabase by ID.
+     *
+     * @param id - element's ID.
      */
     @Override
     public void delete(Integer id) {
-        String pathToScript = "database/scripts/delete_user_by_id.sql";
-
+        String pathToScript = "database/scripts/role_delete.sql";
         try (Connection connection = SOURCE.getConnection()) {
             connection.setAutoCommit(false);
             try (PreparedStatement statement = connection.prepareStatement(RESOURCE.content(pathToScript))) {
                 statement.setInt(1, id);
                 statement.executeUpdate();
+                connection.commit();
             } catch (IOException e) {
                 connection.rollback();
                 LOGGER.error(e.getMessage(), e);
+            } finally {
+                connection.setAutoCommit(true);
             }
-            connection.commit();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
     }
 
     /**
-     * Returns all users from the database as List<User>.
-     * @return - a list of users.
+     * Returns all roles from the database.
+     *
+     * @return - a list of roles.
      */
     @Override
-    public List<User> findAll() {
-        String pathToScript = "database/scripts/get_all_users.sql";
-        List<User> users = new ArrayList<>();
+    public List<Role> findAll() {
+        String pathToScript = "database/scripts/role_get_all.sql";
+        List<Role> roles = new ArrayList<>();
+        Role role = null;
         try (Connection connection = SOURCE.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(RESOURCE.content(pathToScript))) {
-            User user = null;
-            while (resultSet.next()) {
-                user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setName(resultSet.getString("name"));
-                user.setLogin(resultSet.getString("login"));
-                user.setEmail(resultSet.getString("email"));
-                LocalDate date = resultSet.getDate("create_date").toLocalDate();
-                user.setCreateDate(date);
-                user.setPassword(resultSet.getString("password"));
-                Integer roleId = resultSet.getInt("role");
-                Role usersRole = roleStore.findById(roleId);
-                user.setRole(usersRole);
-                users.add(user);
+             ResultSet result = statement.executeQuery(RESOURCE.content(pathToScript))) {
+            while (result.next()) {
+                role = new Role();
+                role.setId(result.getInt("id"));
+                role.setName(result.getString("name"));
+                roles.add(role);
             }
-        } catch (Exception e) {
+        } catch (SQLException | IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
-        return users;
+        return roles;
     }
 
     /**
-     * Returns an user from the database by ID.
-     * @param id - an user's ID.
-     * @return - found user.
+     * Finds a role with specified ID.
+     *
+     * @param id - ID.
+     * @return - found role or null if not found.
      */
     @Override
-    public User findById(Integer id) {
-        String pathToScript = "database/scripts/find_by_id.sql";
-        User user = null;
+    public Role findById(Integer id) {
+        String pathToScript = "database/scripts/role_find_by_id.sql";
+        Role role = null;
 
         try (Connection connection = SOURCE.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(RESOURCE.content(pathToScript))) {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
-                        user = new User();
-                        user.setId(resultSet.getInt("id"));
-                        user.setName(resultSet.getString("name"));
-                        user.setLogin(resultSet.getString("login"));
-                        user.setLogin(resultSet.getString("login"));
-                        user.setEmail(resultSet.getString("email"));
-                        LocalDate date = resultSet.getDate("create_date").toLocalDate();
-                        user.setCreateDate(date);
-                        user.setPassword(resultSet.getString("password"));
-                        Integer roleId = resultSet.getInt("role");
-                        Role usersRole = roleStore.findById(roleId);
-                        user.setRole(usersRole);
+                        role = new Role();
+                        role.setId(resultSet.getInt("id"));
+                        role.setName(resultSet.getString("name"));
                     }
-                } catch (Exception e) {
-                    LOGGER.error(e.getMessage(), e);
                 }
             } catch (IOException e) {
                 LOGGER.error(e.getMessage(), e);
@@ -250,6 +224,6 @@ public class DbStore implements Store<User> {
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
-        return user;
+        return role;
     }
 }
