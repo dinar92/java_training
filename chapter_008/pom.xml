@@ -2,11 +2,73 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>chapter_008</artifactId>
     <version>2.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <parent>
         <groupId>ru.job4j</groupId>
         <artifactId>junior</artifactId>
         <version>2.0</version>
     </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.21.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <inherited>false</inherited>
+                <configuration>
+                    <check>
+                        <branchRate>60</branchRate>
+                        <lineRate>60</lineRate>
+                        <haltOnFailure>true</haltOnFailure>
+                        <totalBranchRate>60</totalBranchRate>
+                        <totalLineRate>60</totalLineRate>
+                        <packageLineRate>60</packageLineRate>
+                        <packageBranchRate>60</packageBranchRate>
+                    </check>
+                    <formats>
+                        <format>html</format>
+                    </formats>
+                    <instrumentation>
+                        <excludes>
+                            <exclude>**/Entry.class</exclude>
+                            <exclude>**/Entries.class</exclude>
+                            <exclude>**/ConfBean.class</exclude>
+                        </excludes>
+                    </instrumentation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>verify</id>
+                        <phase>none</phase>
+                        <goals>
+                            <goal>clean</goal>
+                            <goal>check</goal>
+                            <goal>cobertura</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
