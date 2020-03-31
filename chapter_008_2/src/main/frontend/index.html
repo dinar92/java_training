@@ -12,7 +12,7 @@
         function validate() {
             let firstName = $('#first_name').val();
             let lastName = $('#last_name').val();
-            let gender = $('input[name='gender']:checked').val();
+            let gender = $('input[name="gender"]:checked').val();
             let description = $('#description').val();
             let result = '';
                 if (firstName == '') {
@@ -32,6 +32,15 @@
                 alert(result);
             return false;
             
+        }
+
+        function addRow() {
+            let firstName = $('#first_name').val();
+            let lastName = $('#last_name').val();
+            let gender = $('input[name="gender"]:checked').val();
+            let description = $('#description').val();
+            let result = `<tr><td>${firstName}</td><td>${lastName}</td><td>${gender}</td><td>${description}</td></tr>`
+            $('#table tr:last').after(result);
         }
     </script>
 </head>
@@ -71,7 +80,7 @@
                 </form>
             </div>
 
-            <table class="table">
+            <table class="table" id="table">
                 <thead>
                     <tr>
                         <th>First name</th>
@@ -107,6 +116,7 @@
                     </tr>
                 </tbody>
             </table>
+            <button class="btn btn-default" type="submit" onclick="return addRow();">Add row</button>
         </div>
     </div>
 </body>
