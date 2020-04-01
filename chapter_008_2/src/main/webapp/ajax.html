@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>AJAX</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        function sendGreeting() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/servlets/greet',
+                data: 'name=' + $('#exampleInputEmail').val(),
+                dataType: 'text'
+            }).done(function(data) {
+                $('#currentEmail').remove();
+                $("div.container form:first").before(`<div id="currentEmail">${data}</div>`);
+            }).fail(function(err) {
+                alert(err);
+            });
+        }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label for="exampleInputEmail">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="return sendGreeting();">Submit</button>
+    </form>
+</div>
+</body>
+</html>
