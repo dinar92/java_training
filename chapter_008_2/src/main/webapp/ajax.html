@@ -10,14 +10,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script>
         function sendGreeting() {
-            $.ajax({
-                type: 'GET',
-                url: 'http://localhost:8080/servlets/greet',
-                data: 'name=' + $('#exampleInputEmail').val(),
-                dataType: 'text'
-            }).done(function(data) {
+            let greetAPI = 'http://localhost:8080/servlets/greet';
+            $.getJSON(greetAPI, {name: $('#exampleInputEmail').val()})
+            .done(function(json) {
+                let greeting = json.text;
                 $('#currentEmail').remove();
-                $("div.container form:first").before(`<div id="currentEmail">${data}</div>`);
+                $("div.container form:first").before(`<div id="currentEmail">${greeting}</div>`);
             }).fail(function(err) {
                 alert(err);
             });
